@@ -5,32 +5,43 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
-public class AttackTank extends Rectangle {
+public class BPM extends Rectangle {
 
     private final int height = 50;
     private final int width = 200;
-    private int xSpeed = 5;
+    private final int direction;
     private double radius;
     private int fireRate;
     private final Game game;
     private boolean isFrozen;
     private boolean isHit;
-    //private Transition attackTankMoveTransition;
+    private Transition BPMTransition;
     //private AttackTankExplosionAnim attackTankExplosion;
 
-    public AttackTank(Game game) {
-        super(461, 133);
+    public BPM(Game game, int direction) {
+        super(150, 50);
         this.game = game;
+        this.direction = direction;
         isFrozen = false;
         isHit = false;
-        setX(400);
-        setY(1500);
+
         this.setFill(new ImagePattern(new Image
-                (Jet.class.getResource("/Pics/Objects/T-72GroundTank.png").toExternalForm())));
+                (Jet.class.getResource("/Pics/Objects/russianBPM.png").toExternalForm())));
+
+        setY(700);
+        switch (direction) {
+            case 1:
+                setX(150);
+                break;
+            case -1:
+                setX(1720);
+                this.setScaleX(-1);
+                break;
+        }
     }
 
-    public int getxSpeed() {
-        return xSpeed;
+    public int getDirection() {
+        return direction;
     }
 
     public double getRadius() {
@@ -53,17 +64,13 @@ public class AttackTank extends Rectangle {
         return isHit;
     }
 
-//    public Transition getAttackTankMoveTransition() {
-//        return attackTankMoveTransition;
-//    }
+    public Transition getBPMTransition() {
+        return BPMTransition;
+    }
 
 //    public AttackTankExplosionAnim getAttackTankExplosion() {
 //        return attackTankExplosion;
 //    }
-
-    public void setxSpeed(int xSpeed) {
-        this.xSpeed = xSpeed;
-    }
 
     public void setRadius(double radius) {
         this.radius = radius;
@@ -81,9 +88,9 @@ public class AttackTank extends Rectangle {
         isHit = hit;
     }
 
-//    public void setAttackTankMoveTransition(Transition attackTankMoveTransition) {
-//        this.attackTankMoveTransition = attackTankMoveTransition;
-//    }
+    public void setBPMTransition(Transition BPMTransition) {
+        this.BPMTransition = BPMTransition;
+    }
 
 //    public void setAttackTankExplosion(AttackTankExplosionAnim attackTankExplosion) {
 //        this.attackTankExplosion = attackTankExplosion;

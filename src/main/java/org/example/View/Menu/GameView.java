@@ -34,7 +34,6 @@ public class GameView extends Application {
         jet = game.getJet();
 
         jet.getJetTransition().play();
-        gamePane.getChildren().add(jet);
         setUpInitialWave();
         wave1.startWave();
 

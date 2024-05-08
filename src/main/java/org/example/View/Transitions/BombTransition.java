@@ -1,6 +1,5 @@
 package org.example.View.Transitions;
 
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -8,7 +7,7 @@ import org.example.Model.Game;
 import org.example.Model.Jet;
 import org.example.View.Animations.JetExplosion;
 
-public class JetTransition extends Transition {
+public class BombTransition extends Transition {
 
     private Jet jet;
     private double velocityX;
@@ -19,7 +18,7 @@ public class JetTransition extends Transition {
     private final int duration = 10;
     private final double initialVelocityX = 100;
 
-    public JetTransition(Jet jet, Game game, Pane gamePane) {
+    public BombTransition(Jet jet, Game game, Pane gamePane) {
         this.jet = jet;
         this.game = game;
         this.gamePane = gamePane;
@@ -78,7 +77,7 @@ public class JetTransition extends Transition {
         if (jet.getX() + deltaX <= gamePane.getScene().getWidth() && jet.getX() + deltaX + 100 >= 0)
             jet.setX(jet.getX() + deltaX);
         else if (jet.getX() + deltaX < 0)
-           jet.setX(gamePane.getScene().getWidth() - jet.getWidth());
+            jet.setX(gamePane.getScene().getWidth() - jet.getWidth());
         else if (jet.getX() + deltaX > gamePane.getScene().getWidth() - jet.getWidth()){
             jet.setX(0);
         }
