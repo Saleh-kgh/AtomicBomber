@@ -8,15 +8,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 import org.example.Model.BPM;
-import org.example.Model.Jet;
+import org.example.Model.Vehicle;
 
-public class BPMExplosion extends Transition {
+public class VehicleExplosion extends Transition {
 
     private Pane pane;
-    private BPM Bpm;
+    private Vehicle vehicle;
 
-    public BPMExplosion(BPM Bpm, Pane pane) {
-        this.Bpm = Bpm;
+    public VehicleExplosion(Vehicle vehicle, Pane pane) {
+        this.vehicle = vehicle;
         this.pane = pane;
         this.setCycleCount(1);
         this.setCycleDuration(Duration.millis(1650));
@@ -37,15 +37,15 @@ public class BPMExplosion extends Transition {
         else if (1.35 < v && v <= 1.5) number = 5;
         else if (1.5 < v && v <= 1.65) number = 6;
 
-        Bpm.setWidth(100);
-        Bpm.setHeight(100);
-        Bpm.setFill(new ImagePattern(new Image(
+        vehicle.setWidth(100);
+        vehicle.setHeight(100);
+        vehicle.setFill(new ImagePattern(new Image(
                 JetExplosion.class.getResource("/Frames/JetExplosion/destroy-" + number + ".png").toExternalForm())));
 
         this.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                pane.getChildren().remove(Bpm);
+                pane.getChildren().remove(vehicle);
             }
         });
     }

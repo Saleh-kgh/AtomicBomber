@@ -3,7 +3,7 @@ package org.example.Controller;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import org.example.Model.*;
-import org.example.View.Transitions.BPMTransition;
+import org.example.View.Transitions.VehicleTransition;
 
 public class GameController {
 
@@ -13,7 +13,7 @@ public class GameController {
         BPM Bpm1 = createBPM(wave1.getGame(), -1);
         wave1.addToBpms(Bpm1);
         wave1.getPane().getChildren().add(Bpm1);
-        Bpm1.getBpmTransition().play();
+        Bpm1.getVehicleTransition().play();
     }
 
     public void designWave2 (Wave wave2) {
@@ -49,7 +49,6 @@ public class GameController {
 
     private BPM createBPM(Game game, int direction) {
         BPM Bpm = new BPM(game, direction);
-        Bpm.setBpmTransition(new BPMTransition(Bpm, game, game.getGamePane()));
         return Bpm;
     }
 }

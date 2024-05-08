@@ -24,6 +24,8 @@ public class Wave {
     public ArrayList<Transition> animations = new ArrayList<>();
     public ArrayList<BPM> Bpms = new ArrayList<>();
     public ArrayList<Tank> tanks = new ArrayList<>();
+    public ArrayList<Truck> trucks = new ArrayList<>();
+
     public ArrayList<Bunker> bunkers = new ArrayList<>();
     public ArrayList<Building> buildings = new ArrayList<>();
 
@@ -94,6 +96,10 @@ public class Wave {
         return tanks;
     }
 
+    public ArrayList<Truck> getTrucks() {
+        return trucks;
+    }
+
     public ArrayList<Bunker> getBunkers() {
         return bunkers;
     }
@@ -140,6 +146,10 @@ public class Wave {
 
     public void addToTanks(Tank tank) {
         this.tanks.add(tank);
+    }
+
+    public void addToTrucks(Truck truck) {
+        this.trucks.add(truck);
     }
 
     public void addToBunkers(Bunker bunker) {

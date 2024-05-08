@@ -103,7 +103,7 @@ public class BombTransition extends Transition {
                 destroyedBPMs.add(Bpm);
         game.getCurrentWave().getBpms().removeAll(destroyedBPMs);
         for (BPM Bpm : destroyedBPMs)
-            Bpm.getBpmTransition().collision();
+            Bpm.getVehicleTransition().collision();
     }
 
 //    private void destroyTanks() {
