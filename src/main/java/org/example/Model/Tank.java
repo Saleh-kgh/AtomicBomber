@@ -3,7 +3,7 @@ package org.example.Model;
 import javafx.animation.Transition;
 import javafx.scene.shape.Rectangle;
 
-public class GroundTank extends Rectangle {
+public class Tank extends Rectangle {
 
     private final int height = 50;
     private final int width = 200;
@@ -14,7 +14,7 @@ public class GroundTank extends Rectangle {
     private Transition groundTankMoveTransition;
     //private GroundTankExplosionAnim groundTankExplosion;
 
-    public GroundTank(Game game) {
+    public Tank(Game game) {
         this.game = game;
         this.isFrozen = false;
         this.isHit = false;

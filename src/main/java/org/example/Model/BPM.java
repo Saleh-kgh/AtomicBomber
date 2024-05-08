@@ -4,6 +4,7 @@ import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import org.example.View.Transitions.BPMTransition;
 
 public class BPM extends Rectangle {
 
@@ -15,8 +16,7 @@ public class BPM extends Rectangle {
     private final Game game;
     private boolean isFrozen;
     private boolean isHit;
-    private Transition BPMTransition;
-    //private AttackTankExplosionAnim attackTankExplosion;
+    private BPMTransition bpmTransition;
 
     public BPM(Game game, int direction) {
         super(150, 50);
@@ -64,13 +64,13 @@ public class BPM extends Rectangle {
         return isHit;
     }
 
-    public Transition getBPMTransition() {
-        return BPMTransition;
+    public BPMTransition getBpmTransition() {
+        return bpmTransition;
     }
 
-//    public AttackTankExplosionAnim getAttackTankExplosion() {
-//        return attackTankExplosion;
-//    }
+    public void setBpmTransition(BPMTransition bpmTransition) {
+        this.bpmTransition = bpmTransition;
+    }
 
     public void setRadius(double radius) {
         this.radius = radius;
@@ -86,18 +86,6 @@ public class BPM extends Rectangle {
 
     public void setHit(boolean hit) {
         isHit = hit;
-    }
-
-    public void setBPMTransition(Transition BPMTransition) {
-        this.BPMTransition = BPMTransition;
-    }
-
-//    public void setAttackTankExplosion(AttackTankExplosionAnim attackTankExplosion) {
-//        this.attackTankExplosion = attackTankExplosion;
-//    }
-
-    public void explodeAttackTank() {
-
     }
 
     public void shootBullet() {

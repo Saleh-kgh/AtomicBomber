@@ -22,7 +22,11 @@ public class Wave {
     private int shotBombs;
     private int hitBombs;
     public ArrayList<Transition> animations = new ArrayList<>();
-    public ArrayList<Rectangle> gameObjects = new ArrayList<>();
+    public ArrayList<BPM> Bpms = new ArrayList<>();
+    public ArrayList<Tank> tanks = new ArrayList<>();
+    public ArrayList<Bunker> bunkers = new ArrayList<>();
+    public ArrayList<Building> buildings = new ArrayList<>();
+
 
 
     public Wave(Game game, Pane pane) {
@@ -78,6 +82,26 @@ public class Wave {
         return hitBombs;
     }
 
+    public ArrayList<Transition> getAnimations() {
+        return animations;
+    }
+
+    public ArrayList<BPM> getBpms() {
+        return Bpms;
+    }
+
+    public ArrayList<Tank> getTanks() {
+        return tanks;
+    }
+
+    public ArrayList<Bunker> getBunkers() {
+        return bunkers;
+    }
+
+    public ArrayList<Building> getBuildings() {
+        return buildings;
+    }
+
     public void setRemainingGroundTanks(int remainingGroundTanks) {
         this.remainingGroundTanks = remainingGroundTanks;
     }
@@ -104,6 +128,26 @@ public class Wave {
 
     public void setHitBombs(int hitBombs) {
         this.hitBombs = hitBombs;
+    }
+
+    public void addToAnimations(Transition animation) {
+        this.animations.add(animation);
+    }
+
+    public void addToBpms(BPM Bpm) {
+        this.Bpms.add(Bpm);
+    }
+
+    public void addToTanks(Tank tank) {
+        this.tanks.add(tank);
+    }
+
+    public void addToBunkers(Bunker bunker) {
+        this.bunkers.add(bunker);
+    }
+
+    public void addToBuildings(Building building) {
+        this.buildings.add(building);
     }
 
     public void startWave() {

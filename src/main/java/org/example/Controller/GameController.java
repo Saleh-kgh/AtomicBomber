@@ -2,10 +2,7 @@ package org.example.Controller;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import org.example.Model.BPM;
-import org.example.Model.Game;
-import org.example.Model.Jet;
-import org.example.Model.Wave;
+import org.example.Model.*;
 import org.example.View.Transitions.BPMTransition;
 
 public class GameController {
@@ -14,8 +11,9 @@ public class GameController {
         wave1.getPane().setBackground(new Background(createBackgroundImage()));
         wave1.getPane().getChildren().add(wave1.getGame().getJet());
         BPM Bpm1 = createBPM(wave1.getGame(), -1);
+        wave1.addToBpms(Bpm1);
         wave1.getPane().getChildren().add(Bpm1);
-        Bpm1.getBPMTransition().play();
+        Bpm1.getBpmTransition().play();
     }
 
     public void designWave2 (Wave wave2) {
@@ -34,6 +32,11 @@ public class GameController {
         jet.getJetTransition().setDegreeAngle(jet.getJetTransition().getDegreeAngle() + 5);
     }
 
+    public void releaseBombRegular(Game game) {
+        BombRegular bombRegular = new BombRegular(game.getJet(), game);
+        bombRegular.getBombTransition().play();
+    }
+
     private BackgroundImage createBackgroundImage () {
         Image image = new Image(GameController.class.getResource("/Pics/Backgrounds/dayForest.jpg").toExternalForm(), 1570 ,900, false, false);
         BackgroundImage backgroundImage = new BackgroundImage(image,
@@ -46,7 +49,7 @@ public class GameController {
 
     private BPM createBPM(Game game, int direction) {
         BPM Bpm = new BPM(game, direction);
-        Bpm.setBPMTransition(new BPMTransition(Bpm, game, game.getGamePane()));
+        Bpm.setBpmTransition(new BPMTransition(Bpm, game, game.getGamePane()));
         return Bpm;
     }
 }

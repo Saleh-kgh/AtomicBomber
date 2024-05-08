@@ -3,34 +3,33 @@ package org.example.View.Transitions;
 import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import org.example.Model.Game;
-import org.example.Model.Jet;
-import org.example.View.Animations.JetExplosion;
+import org.example.Model.*;
+import org.example.View.Animations.BombRegularExplosion;
+
+import java.util.ArrayList;
 
 public class BombTransition extends Transition {
 
     private Jet jet;
-    private double velocityX;
+    private final Bomb bomb;
+    private final double velocityX;
     private double velocityY;
+    private final  double gravity = 10;
     private double degreeAngle;
     private Game game;
     private Pane gamePane;
     private final int duration = 10;
-    private final double initialVelocityX = 100;
 
-    public BombTransition(Jet jet, Game game, Pane gamePane) {
+    public BombTransition(Bomb bomb, Jet jet, Game game, Pane gamePane) {
+        this.bomb = bomb;
         this.jet = jet;
         this.game = game;
         this.gamePane = gamePane;
-        this.degreeAngle = 0;
-        this.velocityX = initialVelocityX;
+        this.velocityX = jet.getJetTransition().getVelocityX() * 1.4;
         this.velocityY = 0;
+        this.degreeAngle = jet.getJetTransition().getDegreeAngle();
         this.setCycleCount(-1);
         this.setCycleDuration(Duration.millis(duration));
-    }
-
-    public void setVelocityX(double velocityX) {
-        this.velocityX = velocityX;
     }
 
     public void setVelocityY(double velocityY) {
@@ -45,10 +44,6 @@ public class BombTransition extends Transition {
         this.degreeAngle = degreeAngle;
     }
 
-    public double getInitialVelocityX() {
-        return initialVelocityX;
-    }
-
     public double getVelocityX() {
         return velocityX;
     }
@@ -59,54 +54,85 @@ public class BombTransition extends Transition {
 
     @Override
     protected void interpolate(double v) {
-        jet.setRotate(degreeAngle);
-        if ((degreeAngle > 90 && degreeAngle < 270) || (degreeAngle < -90 && degreeAngle > -270)) {
-            jet.setScaleY(-1);
-        } else {
-            jet.setScaleY(1);
-        }
-
-        setVelocityX(initialVelocityX * Math.cos(Math.toRadians(degreeAngle)));
-        setVelocityY(initialVelocityX * Math.sin(Math.toRadians(degreeAngle)));
+        bomb.setRotate(degreeAngle);
 
         double elapsedTime = v * getCycleDuration().toSeconds();
+        setVelocityY(velocityY + gravity * elapsedTime * 10);
 
         double deltaX = elapsedTime * velocityX;
         double deltaY = elapsedTime * velocityY;
 
-        if (jet.getX() + deltaX <= gamePane.getScene().getWidth() && jet.getX() + deltaX + 100 >= 0)
-            jet.setX(jet.getX() + deltaX);
-        else if (jet.getX() + deltaX < 0)
-            jet.setX(gamePane.getScene().getWidth() - jet.getWidth());
-        else if (jet.getX() + deltaX > gamePane.getScene().getWidth() - jet.getWidth()){
-            jet.setX(0);
-        }
+        setDegreeAngle(getDegreeAngle() + (deltaX < 0 ? -3 : 1.5) * 0.1);
 
-        if (jet.getY() + deltaY + 80 > 0 && jet.getY() + deltaY < 700)
-            jet.setY(jet.getY() + deltaY);
-        else if (jet.getY() + deltaY > 700) {
+        if (bomb.getX() + deltaX <= gamePane.getScene().getWidth() && bomb.getX() + deltaX + 100 >= 0)
+            bomb.setX(bomb.getX() + deltaX);
+        else if (jet.getX() + deltaX < 0)
+            gamePane.getChildren().remove(bomb);
+        else if (bomb.getX() + deltaX > gamePane.getScene().getWidth() - bomb.getWidth())
+            gamePane.getChildren().remove(bomb);
+
+
+        if (bomb.getY() + deltaY + 80 > 0 && bomb.getY() + deltaY < 700)
+            bomb.setY(bomb.getY() + deltaY);
+        else if (bomb.getY() + deltaY > 700) {
             collision();
-        }
-        else {
-            if (velocityY < 0)
-                velocityY = -velocityY;
-            if (degreeAngle >= -90)
-                degreeAngle = -degreeAngle;
-            else
-                degreeAngle = -degreeAngle;
-            jet.setY(0);
         }
     }
 
     public void collision() {
-        if(jet.isInvulnerable())
-            return;
-        if (jet.isHit())
-            return;
-        jet.setHit(true);
-        jet.getJetTransition().stop();
 
-        JetExplosion jetExplosion = new JetExplosion(jet, gamePane);
-        jetExplosion.play();
+        if (bomb.isHit())
+            return;
+        bomb.setHit(true);
+        bomb.getBombTransition().stop();
+        bomb.explodeBomb();
+        destroyNearObjects();
     }
+
+    private void destroyNearObjects() {
+        destroyBpms();
+//        destroyTanks();
+//        destroyBunkers();
+//        destroyBuildings();
+    }
+
+    private void destroyBpms() {
+        ArrayList<BPM> destroyedBPMs = new ArrayList<>();
+        for (BPM Bpm : game.getCurrentWave().getBpms())
+            if (Math.abs(Bpm.getX() - bomb.getX()) < bomb.getRadius())
+                destroyedBPMs.add(Bpm);
+        game.getCurrentWave().getBpms().removeAll(destroyedBPMs);
+        for (BPM Bpm : destroyedBPMs)
+            Bpm.getBpmTransition().collision();
+    }
+
+//    private void destroyTanks() {
+//        ArrayList<Tank> destroyedTanks = new ArrayList<>();
+//        for (Tank tank : game.getCurrentWave().getTanks())
+//            if (Math.abs(tank.getX() - bomb.getX()) < bomb.getRadius())
+//                destroyedTanks.add(tank);
+//        game.getCurrentWave().getTanks().removeAll(destroyedTanks);
+//        for (Tank tank : destroyedTanks)
+//            tank.gettankTransition().collision();
+//    }
+
+//    private void destroyBunkers() {
+//        ArrayList<BPM> destroyedBPMs = new ArrayList<>();
+//        for (BPM Bpm : game.getCurrentWave().getBpms())
+//            if (Math.abs(Bpm.getX() - bomb.getX()) < bomb.getRadius())
+//                destroyedBPMs.add(Bpm);
+//        game.getCurrentWave().getBpms().removeAll(destroyedBPMs);
+//        for (BPM Bpm : game.getCurrentWave().getBpms())
+//            Bpm.getBpmTransition().collision();
+//    }
+//
+//    private void destroyBuildings() {
+//        ArrayList<BPM> destroyedBPMs = new ArrayList<>();
+//        for (BPM Bpm : game.getCurrentWave().getBpms())
+//            if (Math.abs(Bpm.getX() - bomb.getX()) < bomb.getRadius())
+//                destroyedBPMs.add(Bpm);
+//        game.getCurrentWave().getBpms().removeAll(destroyedBPMs);
+//        for (BPM Bpm : game.getCurrentWave().getBpms())
+//            Bpm.getBpmTransition().collision();
+//    }
 }

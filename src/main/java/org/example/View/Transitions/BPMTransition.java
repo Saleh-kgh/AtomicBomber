@@ -58,7 +58,7 @@ public class BPMTransition extends Transition {
         if (Bpm.isHit())
             return;
         Bpm.setHit(true);
-        Bpm.getBPMTransition().stop();
+        Bpm.getBpmTransition().stop();
 
         BPMExplosion BpmExplosion = new BPMExplosion(Bpm, gamePane);
         BpmExplosion.play();

@@ -35,6 +35,7 @@ public class GameView extends Application {
 
         jet.getJetTransition().play();
         setUpInitialWave();
+        game.setCurrentWave(wave1);
         wave1.startWave();
 
         Scene scene = new Scene(gamePane);
@@ -52,6 +53,8 @@ public class GameView extends Application {
                 case DOWN:
                     gameController.setJetDirectionDown(jet);
                     break;
+                case SPACE:
+                    gameController.releaseBombRegular(game);
                 default:
                     break;
             }
