@@ -1,0 +1,53 @@
+/* Set the background color to military green */
+.root {
+    -fx-background-color: #556B2F;
+}
+
+/* Style for TextFields */
+.text-field {
+    -fx-background-color: #F0FFF0; /* Light green */
+    -fx-text-fill: #556B2F; /* Dark olive green */
+    -fx-font-family: "Arial";
+}
+
+/* Focused style for TextFields */
+.text-field:focused {
+    -fx-background-color: #D3D3D3; /* Light gray */
+}
+
+/* Style for Labels */
+.label {
+    -fx-text-fill: #FFF; /* White */
+    -fx-font-family: "Arial";
+}
+
+/* Special style for the "Welcome to Atomic Bomber!" label */
+#welcome-label {
+    -fx-font-size: 24px; /* Bigger font size */
+    -fx-font-family: "Verdana"; /* Special font */
+    -fx-text-fill: #FFD700; /* Gold color */
+}
+
+/* Style for Buttons */
+.button {
+    -fx-background-color: #8FBC8F; /* Dark sea green */
+    -fx-text-fill: #FFF; /* White */
+    -fx-font-family: "Arial";
+}
+
+/* Focused style for Buttons */
+.button:focused {
+    -fx-background-color: #2E8B57; /* Sea green */
+}
+
+/* Style for AnchorPane */
+.anchor-pane {
+    -fx-background-color: #556B2F; /* Dark olive green */
+}
+
+/* Pressed style for Buttons */
+.button:pressed {
+    -fx-background-color: #3CB371; /* Medium sea green */
+}
+
+
