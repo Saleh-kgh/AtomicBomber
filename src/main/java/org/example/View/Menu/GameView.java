@@ -25,12 +25,8 @@ public class GameView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        File file = new File("D:/AP/AtomicBomber/AlphaVersion/src/main/resources/media/fortunateSon.mp3");
-        Media media = new Media(file.toURI().toString());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setVolume(0.5);
-        mediaPlayer.play();
+        setMediaPlayer("fortunateSon");
+        musicPlayCommand(true);
 
         gamePane = new Pane();
         setSize(gamePane);
@@ -39,7 +35,7 @@ public class GameView extends Application {
 
         jet.getJetTransition().play();
         gamePane.getChildren().add(jet);
-        setUpWaves();
+        setUpInitialWave();
         wave1.startWave();
 
         Scene scene = new Scene(gamePane);
@@ -70,32 +66,32 @@ public class GameView extends Application {
         pane.setMaxWidth(1570);
     }
 
-    private void setUpWaves() {
+    private void setUpInitialWave() {
         wave1 = new Wave(game, gamePane);
         wave2 = new Wave(game, gamePane);
         wave3 = new Wave(game, gamePane);
 
         GameController gameController = new GameController();
         gameController.designWave1(wave1);
-        gameController.designWave2(wave2);
-        gameController.designWave3(wave3);
 
         game.setWave1(wave1);
         game.setWave2(wave2);
         game.setWave3(wave3);
     }
 
-//    private void jetRequest () {
-//        jet = new Jet(game);
-//        jet.setJetTransition(new JetTransition(jet, game, gamePane));
-//        jet.setOnKeyPressed(keyEvent -> {
-//            if (keyEvent.getCode() == KeyCode.UP) {
-//                jet.getJetTransition().setDegreeAngle(jet.getJetTransition().getDegreeAngle() - 5);
-//            } else if (keyEvent.getCode() == KeyCode.DOWN) {
-//                jet.getJetTransition().setDegreeAngle(jet.getJetTransition().getDegreeAngle() + 5);
-//            } else if (keyEvent.getCode() == KeyCode.SPACE) {
-//                System.out.println(jet.getJetTransition().getVelocityX());
-//            }
-//        });
-//    }
+    private void setMediaPlayer(String musicName) {
+        File file = new File("D:/AP/AtomicBomber/AlphaVersion/src/main/resources/media/" + musicName +".mp3");
+        Media media = new Media(file.toURI().toString());
+
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        mediaPlayer.setVolume(0.5);
+    }
+
+    public void musicPlayCommand(boolean play) {
+        if (play)
+            mediaPlayer.play();
+        else
+            mediaPlayer.stop();
+    }
 }
