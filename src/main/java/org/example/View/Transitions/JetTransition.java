@@ -140,7 +140,6 @@ public class JetTransition extends Transition {
         for (Bunker bunker : game.getCurrentWave().getBunkers())
             if (bunker.intersects(jet.getBoundsInParent())) {
                 explode();
-                bunker.getFacilityExplosion().play();
                 return;
             }
 
@@ -148,7 +147,6 @@ public class JetTransition extends Transition {
         for (Building building : game.getCurrentWave().getBuildings())
             if (building.intersects(jet.getBoundsInParent())) {
                 explode();
-                building.getFacilityExplosion().play();
                 return;
             }
     }

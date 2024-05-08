@@ -8,13 +8,15 @@ import java.util.ArrayList;
 
 public class Wave {
 
+    private final int number;
     private final Game game;
     private final Pane pane;
     private final int height = 900;
     private final int width = 1570;
     private final int groundHeight = 100;
-    private int remainingGroundTanks;
-    private int remainingAttackTanks;
+    private int remainingBpms;
+    private int remainingTanks;
+    private int remainingTrucks;
     private int remainingMigs;
     private int remainingBunkers;
     private int remainingBuildings;
@@ -24,15 +26,15 @@ public class Wave {
     public ArrayList<BPM> Bpms = new ArrayList<>();
     public ArrayList<Tank> tanks = new ArrayList<>();
     public ArrayList<Truck> trucks = new ArrayList<>();
-
     public ArrayList<Bunker> bunkers = new ArrayList<>();
     public ArrayList<Building> buildings = new ArrayList<>();
 
 
 
-    public Wave(Game game, Pane pane) {
+    public Wave(Game game, Pane pane, int number) {
         this.game = game;
         this.pane = pane;
+        this.number = number;
     }
 
     public Game getGame() {
@@ -55,12 +57,28 @@ public class Wave {
         return groundHeight;
     }
 
-    public int getRemainingGroundTanks() {
-        return remainingGroundTanks;
+    public int getRemainingBpms() {
+        return remainingBpms;
     }
 
-    public int getRemainingAttackTanks() {
-        return remainingAttackTanks;
+    public void setRemainingBpms(int remainingBpms) {
+        this.remainingBpms = remainingBpms;
+    }
+
+    public int getRemainingTanks() {
+        return remainingTanks;
+    }
+
+    public void setRemainingTanks(int remainingTanks) {
+        this.remainingTanks = remainingTanks;
+    }
+
+    public int getRemainingTrucks() {
+        return remainingTrucks;
+    }
+
+    public void setRemainingTrucks(int remainingTrucks) {
+        this.remainingTrucks = remainingTrucks;
     }
 
     public int getRemainingMigs() {
@@ -105,14 +123,6 @@ public class Wave {
 
     public ArrayList<Building> getBuildings() {
         return buildings;
-    }
-
-    public void setRemainingGroundTanks(int remainingGroundTanks) {
-        this.remainingGroundTanks = remainingGroundTanks;
-    }
-
-    public void setRemainingAttackTanks(int remainingAttackTanks) {
-        this.remainingAttackTanks = remainingAttackTanks;
     }
 
     public void setRemainingMigs(int remainingMigs) {

@@ -9,8 +9,8 @@ public class Building extends Facility {
     private final int height = 80;
     private final int width = 300;
 
-    public Building(Game game) {
-        super(game);
+    public Building(Game game, int x) {
+        super(game, 250, 100, x);
 
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/Building.png").toExternalForm())));

@@ -5,7 +5,7 @@ import org.example.Model.Game;
 import org.example.View.Animations.VehicleExplosion;
 import org.example.View.Transitions.VehicleTransition;
 
-public class Vehicle extends Rectangle {
+public abstract class Vehicle extends Rectangle {
 
     private int direction;
     private final int width;
@@ -23,7 +23,7 @@ public class Vehicle extends Rectangle {
         this.length = length;
         this.game = game;
         this.direction = direction;
-
+        game.getGamePane().getChildren().add(this);
         this.vehicleTransition = new VehicleTransition(this, game);
         this.vehicleExplosion = new VehicleExplosion(this, game.getGamePane());
     }
@@ -71,4 +71,6 @@ public class Vehicle extends Rectangle {
     public void setDifficultyLevel(double difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
+
+    abstract public void activateNext();
 }

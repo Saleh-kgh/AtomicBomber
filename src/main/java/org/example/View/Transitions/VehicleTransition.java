@@ -10,7 +10,7 @@ public class VehicleTransition extends Transition {
 
     private Vehicle vehicle;
     private final double velocityX = 50;
-    private final int direction;
+    private int direction;
     private Game game;
     private Pane gamePane;
     private final int duration = 10;
@@ -38,11 +38,15 @@ public class VehicleTransition extends Transition {
             vehicle.setX(vehicle.getX() + deltaX);
 
         else if (vehicle.getX() + deltaX + 500 < 0) {
-            vehicle.getGame().getGamePane().getChildren().remove(vehicle);
+            vehicle.setScaleX(vehicle.getScaleX() * -1);
+            direction = direction * -1;
+            vehicle.setX(-250);
         }
 
         else if (vehicle.getX() + deltaX > gamePane.getScene().getWidth() + 500){
-            vehicle.getGame().getGamePane().getChildren().remove(vehicle);
+            vehicle.setScaleX(vehicle.getScaleX() * -1);
+            direction = direction * -1;
+            vehicle.setX(1750);
         }
 
         if (vehicle.intersects(game.getJet().getBoundsInParent())) {

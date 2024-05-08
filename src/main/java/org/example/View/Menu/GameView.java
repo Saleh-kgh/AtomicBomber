@@ -29,7 +29,7 @@ public class GameView extends Application {
 
         gamePane = new Pane();
         setSize(gamePane);
-        game = new Game(Player.getLoggedInPlayer(), this, gamePane);
+        game = new Game(Player.getLoggedInPlayer(), this, gamePane, 3);
         jet = game.getJet();
 
         jet.getJetTransition().play();
@@ -68,16 +68,16 @@ public class GameView extends Application {
     }
 
     private void setUpInitialWave() {
-        wave1 = new Wave(game, gamePane);
-        wave2 = new Wave(game, gamePane);
-        wave3 = new Wave(game, gamePane);
+        wave1 = new Wave(game, gamePane, 1);
+        wave2 = new Wave(game, gamePane, 2);
+        wave3 = new Wave(game, gamePane, 3);
 
         GameController gameController = new GameController();
         gameController.designWave1(wave1);
 
-        game.setWave1(wave1);
-        game.setWave2(wave2);
-        game.setWave3(wave3);
+        game.addToWaves(wave1);
+        game.addToWaves(wave2);
+        game.addToWaves(wave3);
     }
 
     private void setMediaPlayer(String musicName) {

@@ -6,16 +6,21 @@ import org.example.View.Animations.FacilityExplosion;
 
 public class Facility extends Rectangle {
 
-    private final int height = 80;
-    private final int width = 300;
+    private final int height;
+    private final int width;
     private final Game game;
     private boolean isHit;
     private FacilityExplosion facilityExplosion;
 
-    public Facility(Game game) {
-        super(300, 80);
+    public Facility(Game game,int width, int height, int x) {
+        super(width, height);
+        this.width = width;
+        this.height = height;
         this.game = game;
         this.isHit = false;
+        setX(x);
+        setY(740 - height);
+        game.getGamePane().getChildren().add(this);
         facilityExplosion = new FacilityExplosion(this, game.getGamePane());
     }
 

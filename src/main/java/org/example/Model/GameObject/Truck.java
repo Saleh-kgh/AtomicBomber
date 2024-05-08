@@ -14,12 +14,22 @@ public class Truck extends Vehicle {
         setY(700);
         switch (direction) {
             case 1:
-                setX(150);
+                setX(-250);
                 break;
             case -1:
-                setX(1720);
+                setX(1780);
                 this.setScaleX(-1);
                 break;
         }
+    }
+
+    @Override
+    public void activateNext() {
+        int index = 0;
+        for (Truck truck : getGame().getCurrentWave().getTrucks())
+            if (truck.equals(this))
+                index = getGame().getCurrentWave().getTrucks().indexOf(this) + 1;
+        if (getGame().getCurrentWave().getTrucks().size() > index)
+            getGame().getCurrentWave().getTrucks().get(index).getVehicleTransition().play();
     }
 }

@@ -14,12 +14,22 @@ public class Tank extends Vehicle {
         setY(700);
         switch (direction) {
             case 1:
-                setX(150);
+                setX(-350);
                 break;
             case -1:
-                setX(1720);
+                setX(1800);
                 this.setScaleX(-1);
                 break;
         }
+    }
+
+    @Override
+    public void activateNext() {
+        int index = 0;
+        for (Tank tank : getGame().getCurrentWave().getTanks())
+            if (tank.equals(this))
+                index = getGame().getCurrentWave().getTanks().indexOf(this) + 1;
+        if (getGame().getCurrentWave().getTanks().size() > index)
+            getGame().getCurrentWave().getTanks().get(index).getVehicleTransition().play();
     }
 }

@@ -5,23 +5,25 @@ import org.example.Model.GameObject.Jet;
 import org.example.View.Menu.GameView;
 import org.example.View.Transitions.JetTransition;
 
+import java.util.ArrayList;
+
 public class Game {
 
     private final Player player;
     private final GameView gameView;
     private final Pane gamePane;
     private final Jet jet;
+    private final int numberOfWaves;
     private Wave currentWave;
-    private Wave wave1;
-    private Wave wave2;
-    private Wave wave3;
+    private ArrayList<Wave> waves = new ArrayList<>();
     private int score;
     private int kills;
 
-    public Game(Player player, GameView gameView, Pane gamePane) {
+    public Game(Player player, GameView gameView, Pane gamePane, int numberOfWaves) {
         this.player = player;
         this.gameView = gameView;
         this.gamePane = gamePane;
+        this.numberOfWaves = numberOfWaves;
         score = 0;
         kills = 0;
         jet = new Jet(this);
@@ -36,16 +38,8 @@ public class Game {
         return gameView;
     }
 
-    public Wave getWave1() {
-        return wave1;
-    }
-
-    public Wave getWave2() {
-        return wave2;
-    }
-
-    public Wave getWave3() {
-        return wave3;
+    public ArrayList<Wave> getWaves() {
+        return waves;
     }
 
     public Wave getCurrentWave() {
@@ -64,16 +58,12 @@ public class Game {
         this.currentWave = currentWave;
     }
 
-    public void setWave1(Wave wave1) {
-        this.wave1 = wave1;
+    public int getNumberOfWaves() {
+        return numberOfWaves;
     }
 
-    public void setWave2(Wave wave2) {
-        this.wave2 = wave2;
-    }
-
-    public void setWave3(Wave wave3) {
-        this.wave3 = wave3;
+    public void addToWaves(Wave wave) {
+        this.waves.add(wave);
     }
 
     public int getScore() {
