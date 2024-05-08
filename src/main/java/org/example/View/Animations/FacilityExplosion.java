@@ -6,16 +6,16 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import org.example.Model.GameObject.Jet;
+import org.example.Model.GameObject.Facility;
 
-public class JetExplosion extends Transition {
-
+public class FacilityExplosion extends Transition {
     private Pane pane;
-    private Jet jet;
+    private Facility facility;
 
-    public JetExplosion(Jet jet, Pane pane) {
-        this.jet = jet;
+    public FacilityExplosion(Facility facility, Pane pane) {
+        this.facility = facility;
         this.pane = pane;
         this.setCycleCount(1);
         this.setCycleDuration(Duration.millis(1200));
@@ -35,15 +35,15 @@ public class JetExplosion extends Transition {
             }
         }
 
-        jet.setWidth(100);
-        jet.setHeight(100);
-        jet.setFill(new ImagePattern(new Image(
-                JetExplosion.class.getResource("/Frames/VehicleExplosion/" + number + ".png").toExternalForm())));
+        facility.setWidth(200);
+        facility.setHeight(200);
+        facility.setFill(new ImagePattern(new Image(
+                VehicleExplosion.class.getResource("/Frames/VehicleExplosion/" + number + ".png").toExternalForm())));
 
         this.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                pane.getChildren().remove(jet);
+                pane.getChildren().remove(facility);
             }
         });
     }

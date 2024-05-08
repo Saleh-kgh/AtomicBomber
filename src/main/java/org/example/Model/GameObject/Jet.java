@@ -1,10 +1,10 @@
-package org.example.Model;
+package org.example.Model.GameObject;
 
 
-import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import org.example.Model.Game;
 import org.example.View.Transitions.JetTransition;
 
 public class Jet extends Rectangle {

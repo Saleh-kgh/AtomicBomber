@@ -1,11 +1,10 @@
 package org.example.View.Transitions;
 
-import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.example.Model.Game;
-import org.example.Model.Jet;
+import org.example.Model.GameObject.*;
 import org.example.View.Animations.JetExplosion;
 
 public class JetTransition extends Transition {
@@ -86,7 +85,7 @@ public class JetTransition extends Transition {
         if (jet.getY() + deltaY + 80 > 0 && jet.getY() + deltaY < 700)
             jet.setY(jet.getY() + deltaY);
         else if (jet.getY() + deltaY > 700) {
-            collision();
+            explode();
         }
         else {
             if (velocityY < 0)
@@ -97,9 +96,11 @@ public class JetTransition extends Transition {
                 degreeAngle = -degreeAngle;
             jet.setY(0);
         }
+
+        checkCollision();
     }
 
-    public void collision() {
+    public void explode() {
         if(jet.isInvulnerable())
             return;
         if (jet.isHit())
@@ -109,5 +110,46 @@ public class JetTransition extends Transition {
 
         JetExplosion jetExplosion = new JetExplosion(jet, gamePane);
         jetExplosion.play();
+    }
+
+    private void checkCollision() {
+        for (Tank tank : game.getCurrentWave().getTanks())
+            if (tank.intersects(jet.getBoundsInParent())) {
+                explode();
+                tank.getVehicleTransition().explode();
+                return;
+            }
+
+
+        for (Truck truck : game.getCurrentWave().getTrucks())
+            if (truck.intersects(jet.getBoundsInParent())) {
+                explode();
+                truck.getVehicleTransition().explode();
+                return;
+            }
+
+
+        for (BPM bpm : game.getCurrentWave().getBpms())
+            if (bpm.intersects(jet.getBoundsInParent())) {
+                explode();
+                bpm.getVehicleTransition().explode();
+                return;
+            }
+
+
+        for (Bunker bunker : game.getCurrentWave().getBunkers())
+            if (bunker.intersects(jet.getBoundsInParent())) {
+                explode();
+                bunker.getFacilityExplosion().play();
+                return;
+            }
+
+
+        for (Building building : game.getCurrentWave().getBuildings())
+            if (building.intersects(jet.getBoundsInParent())) {
+                explode();
+                building.getFacilityExplosion().play();
+                return;
+            }
     }
 }

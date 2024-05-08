@@ -1,10 +1,8 @@
-package org.example.Model;
+package org.example.Model.GameObject;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
-import org.example.View.Animations.VehicleExplosion;
-import org.example.View.Transitions.VehicleTransition;
+import org.example.Model.Game;
 
 public class BPM extends Vehicle {
 

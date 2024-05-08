@@ -1,9 +1,9 @@
 package org.example.Model;
 
 import javafx.scene.layout.Pane;
+import org.example.Model.GameObject.Jet;
 import org.example.View.Menu.GameView;
 import org.example.View.Transitions.JetTransition;
-import java.nio.file.Watchable;
 
 public class Game {
 

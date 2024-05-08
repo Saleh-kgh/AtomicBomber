@@ -1,6 +1,7 @@
-package org.example.Model;
+package org.example.Model.GameObject;
 
 import javafx.scene.shape.Rectangle;
+import org.example.Model.Game;
 import org.example.View.Animations.VehicleExplosion;
 import org.example.View.Transitions.VehicleTransition;
 

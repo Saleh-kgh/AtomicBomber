@@ -1,9 +1,8 @@
 package org.example.Model;
 
 import javafx.animation.Transition;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import org.example.Model.GameObject.*;
 
 import java.util.ArrayList;
 

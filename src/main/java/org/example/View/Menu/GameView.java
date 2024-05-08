@@ -2,14 +2,13 @@ package org.example.View.Menu;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import org.example.Controller.GameController;
 import org.example.Model.*;
-import org.example.View.Transitions.JetTransition;
+import org.example.Model.GameObject.Jet;
 
 import java.io.File;
 

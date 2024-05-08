@@ -3,7 +3,9 @@ package org.example.Controller;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import org.example.Model.*;
-import org.example.View.Transitions.VehicleTransition;
+import org.example.Model.GameObject.BPM;
+import org.example.Model.GameObject.BombRegular;
+import org.example.Model.GameObject.Jet;
 
 public class GameController {
 

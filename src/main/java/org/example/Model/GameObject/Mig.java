@@ -1,7 +1,8 @@
-package org.example.Model;
+package org.example.Model.GameObject;
 
 import javafx.animation.Transition;
 import javafx.scene.shape.Rectangle;
+import org.example.Model.Game;
 
 public class Mig extends Rectangle {
     private final int height = 30;

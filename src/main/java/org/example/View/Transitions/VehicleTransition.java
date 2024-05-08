@@ -4,8 +4,7 @@ import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import org.example.Model.Game;
-import org.example.Model.Vehicle;
-import org.example.View.Animations.VehicleExplosion;
+import org.example.Model.GameObject.Vehicle;
 
 public class VehicleTransition extends Transition {
 
@@ -47,19 +46,18 @@ public class VehicleTransition extends Transition {
         }
 
         if (vehicle.intersects(game.getJet().getBoundsInParent())) {
-            collision();
-            game.getJet().getJetTransition().collision();
+            explode();
+            game.getJet().getJetTransition().explode();
         }
 
     }
 
-    public void collision() {
+    public void explode() {
         if (vehicle.isHit())
             return;
         vehicle.setHit(true);
         vehicle.getVehicleTransition().stop();
 
-        VehicleExplosion vehicleExplosion = new VehicleExplosion(vehicle, gamePane);
-        vehicleExplosion.play();
+        vehicle.getVehicleExplosion().play();
     }
 }
