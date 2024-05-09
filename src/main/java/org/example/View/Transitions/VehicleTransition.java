@@ -9,7 +9,7 @@ import org.example.Model.GameObject.Vehicle;
 public class VehicleTransition extends Transition {
 
     private Vehicle vehicle;
-    private final double velocityX = 50;
+    private final double velocityX;
     private int direction;
     private Game game;
     private Pane gamePane;
@@ -20,6 +20,7 @@ public class VehicleTransition extends Transition {
         this.game = game;
         this.gamePane = game.getGamePane();
         this.direction = vehicle.getDirection();
+        this.velocityX = 25 * game.getDifficultyLevel();
         this.setCycleCount(-1);
         this.setCycleDuration(Duration.millis(duration));
     }

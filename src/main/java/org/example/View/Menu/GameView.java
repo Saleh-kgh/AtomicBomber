@@ -42,8 +42,8 @@ public class GameView extends Application {
         jet.getJetTransition().play();
         setUpInitialWave();
         game.setCurrentWave(wave1);
-        startWaves();
         setUpHud();
+        startWaves();
 
         Scene scene = new Scene(gamePane);
         stage.setScene(scene);
@@ -65,11 +65,14 @@ public class GameView extends Application {
                     case SPACE:
                         gameController.releaseBombRegular(game);
                         break;
-                    case P:
+                    case L:
                         gameController.pauseTransitions(game.getCurrentWave());
                         break;
                     case O:
                         gameController.resumeTransitions(game.getCurrentWave());
+                        break;
+                    case P:
+                        gameController.passWave(game);
                         break;
                     default:
                         break;
@@ -125,35 +128,35 @@ public class GameView extends Application {
         atomicBombCount.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
         gamePane.getChildren().add(atomicBombCount);
         atomicBombCount.setLayoutX(50);
-        atomicBombCount.setLayoutY(50);
+        atomicBombCount.setLayoutY(25);
 
 
         Label clusterBombCount = new Label("cluster Bombs: X " + jet.getRemainingClusterBombs());
         clusterBombCount.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
         gamePane.getChildren().add(clusterBombCount);
         clusterBombCount.setLayoutX(300);
-        clusterBombCount.setLayoutY(50);
+        clusterBombCount.setLayoutY(25);
 
 
         Label jetRemainingLives = new Label("Jet Lives: X " + jet.getRemainingLives());
         jetRemainingLives.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
         gamePane.getChildren().add(jetRemainingLives);
         jetRemainingLives.setLayoutX(50);
-        jetRemainingLives.setLayoutY(100);
+        jetRemainingLives.setLayoutY(70);
 
 
         Label FreezeWeaponStatus = new Label("Freeze Weapon: " + jet.getFreezeWeaponStatus());
         FreezeWeaponStatus.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
         gamePane.getChildren().add(FreezeWeaponStatus);
-        FreezeWeaponStatus.setLayoutX(320);
-        FreezeWeaponStatus.setLayoutY(100);
+        FreezeWeaponStatus.setLayoutX(1300);
+        FreezeWeaponStatus.setLayoutY(25);
 
 
         Label killsCount = new Label("Kills: X " + game.getKills());
         killsCount.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
         gamePane.getChildren().add(killsCount);
-        killsCount.setLayoutX(200);
-        killsCount.setLayoutY(100);
+        killsCount.setLayoutX(300);
+        killsCount.setLayoutY(70);
 
 
         Label currentWaveNumber = new Label("Wave " + game.getCurrentWave().getNumber());

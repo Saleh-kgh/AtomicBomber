@@ -3,8 +3,8 @@ package org.example.Model;
 import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
 import org.example.Model.GameObject.*;
-
 import java.util.ArrayList;
+import javafx.scene.shape.Rectangle;
 
 public class Wave {
 
@@ -28,6 +28,7 @@ public class Wave {
     public ArrayList<Truck> trucks = new ArrayList<>();
     public ArrayList<Bunker> bunkers = new ArrayList<>();
     public ArrayList<Building> buildings = new ArrayList<>();
+    public ArrayList<Rectangle> shotWeaponry = new ArrayList<>();
 
 
 
@@ -129,6 +130,10 @@ public class Wave {
         return buildings;
     }
 
+    public ArrayList<Rectangle> getShotWeaponry() {
+        return shotWeaponry;
+    }
+
     public void setRemainingMigs(int remainingMigs) {
         this.remainingMigs = remainingMigs;
     }
@@ -172,6 +177,11 @@ public class Wave {
     public void addToBuildings(Building building) {
         this.buildings.add(building);
     }
+
+    public void addToShotWeaponry(Rectangle weaponry) {
+        this.shotWeaponry.add(weaponry);
+    }
+
 
     public void startWave() {
 

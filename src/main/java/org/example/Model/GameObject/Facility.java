@@ -1,9 +1,13 @@
 package org.example.Model.GameObject;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
 import org.example.Model.Wave;
 import org.example.View.Animations.FacilityExplosion;
+
+import java.io.File;
 
 public abstract class Facility extends Rectangle {
 
@@ -49,6 +53,16 @@ public abstract class Facility extends Rectangle {
 
     public void setFacilityExplosion(FacilityExplosion facilityExplosion) {
         this.facilityExplosion = facilityExplosion;
+    }
+
+    protected void playExplosionSound() {
+        File file = new File("D:/AP/AtomicBomber/AlphaVersion/src/main/resources/media/sound/" + "FacilityExp" +".wav");
+        Media media = new Media(file.toURI().toString());
+
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.play();
     }
 
     abstract public void getEliminated();

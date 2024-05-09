@@ -1,18 +1,30 @@
 package org.example.Model.GameObject;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
+import javafx.util.Duration;
 import org.example.Model.Game;
+
+import java.io.File;
 
 public class BPM extends Vehicle {
 
     private double radius;
     private int fireRate;
+    private Timeline shootingTimeline;
 
     public BPM(Game game, int direction) {
         super(150, 50, game, direction);
+        this.radius = 200;
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/russianBPM.png").toExternalForm())));
+
+        startShooting();
 
         setY(700);
         switch (direction) {
@@ -26,9 +38,58 @@ public class BPM extends Vehicle {
         }
     }
 
+    private void startShooting() {
+        shootingTimeline = new Timeline(
+                new KeyFrame(Duration.seconds(4), event -> {
+                    shoot();
+                })
+        );
+
+        shootingTimeline.setCycleCount(Timeline.INDEFINITE);
+        shootingTimeline.play();
+    }
+
+    private void shoot() {
+        if (getWave().equals(getGame().getCurrentWave()) &&
+                !getGame().isPaused() &&
+                Math.abs(this.getX() - getGame().getJet().getX()) < this.getRadius() * getGame().getDifficultyLevel()) {
+            Bullet bullet1 = new Bullet(getGame(), this);
+            Bullet bullet2 = new Bullet(getGame(), this);
+            Bullet bullet3 = new Bullet(getGame(), this);
+            bullet1.getBulletTransition().play();
+
+            PauseTransition pause2 = new PauseTransition(Duration.seconds(0.3));
+            pause2.setOnFinished(event -> {
+                bullet2.getBulletTransition().play();
+            });
+            pause2.play();
+
+            PauseTransition pause3 = new PauseTransition(Duration.seconds(0.6));
+            pause3.setOnFinished(event -> {
+                bullet3.getBulletTransition().play();
+            });
+            pause3.play();
+
+            playShootingSound();
+        }
+    }
+
+    private void playShootingSound() {
+        File file = new File("D:/AP/AtomicBomber/AlphaVersion/src/main/resources/media/sound/" + "BPMTrioShot" +".wav");
+        Media media = new Media(file.toURI().toString());
+
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.play();
+    }
 
     public double getRadius() {
         return radius;
+    }
+
+    public Timeline getShootingTimeline() {
+        return shootingTimeline;
     }
 
     public int getFireRate() {
@@ -43,16 +104,14 @@ public class BPM extends Vehicle {
         this.fireRate = fireRate;
     }
 
-    public void shootBullet() {
-    }
-
     private void activateNext() {
         int index = 0;
         for (BPM bpm : getGame().getCurrentWave().getBpms())
             if (bpm.equals(this))
                 index = getGame().getCurrentWave().getBpms().indexOf(this) + 1;
-        if (getGame().getCurrentWave().getBpms().size() > index)
+        if (getGame().getCurrentWave().getBpms().size() > index) {
             getGame().getCurrentWave().getBpms().get(index).getVehicleTransition().play();
+        }
     }
 
     @Override
@@ -64,6 +123,8 @@ public class BPM extends Vehicle {
             getGame().setHitBombs(getGame().getHitBombs() + 1);
             getGame().setKills(getGame().getKills() + 3);
             getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 3);
+            playExplosionSound();
+            shootingTimeline.stop();
             this.getVehicleTransition().explode();
             activateNext();
         }

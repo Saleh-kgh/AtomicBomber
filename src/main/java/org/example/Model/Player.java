@@ -12,7 +12,6 @@ public class Player {
     private int shotBombs;
     private int hitBombs;
     private int finalWave;
-    private double accuracy;
     private int currentDifficulty; // for easy 2 for med 3 for hard
     private static ArrayList<Player> players = new ArrayList<>();
     private static Player loggedInPlayer;
@@ -27,7 +26,6 @@ public class Player {
         shotBombs = 0;
         hitBombs = 0;
         finalWave = 0;
-        accuracy = 0;
         players.add(this);
     }
 
@@ -88,12 +86,8 @@ public class Player {
         this.hitBombs = hitBombs;
     }
 
-    public double getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(double accuracy) {
-        this.accuracy = accuracy;
+    public String getAccuracy() {
+        return String.format("0.2f", (double) 100 * hitBombs / shotBombs);
     }
 
     public int getDifficultyBasedKills() {

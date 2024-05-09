@@ -41,6 +41,7 @@ public class Truck extends Vehicle {
             getGame().setHitBombs(getGame().getHitBombs() + 1);
             getGame().setKills(getGame().getKills() + 1);
             getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 1);
+            playExplosionSound();
             this.getVehicleTransition().explode();
             activateNext();
         }

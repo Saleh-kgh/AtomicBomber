@@ -1,10 +1,14 @@
 package org.example.Model.GameObject;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
 import org.example.Model.Wave;
 import org.example.View.Animations.VehicleExplosion;
 import org.example.View.Transitions.VehicleTransition;
+
+import java.io.File;
 
 public abstract class Vehicle extends Rectangle {
 
@@ -77,6 +81,16 @@ public abstract class Vehicle extends Rectangle {
 
     public void setDifficultyLevel(double difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
+    }
+
+    protected void playExplosionSound() {
+        File file = new File("D:/AP/AtomicBomber/AlphaVersion/src/main/resources/media/sound/" + "VehicleExp" +".wav");
+        Media media = new Media(file.toURI().toString());
+
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setCycleCount(1);
+        mediaPlayer.setVolume(0.3);
+        mediaPlayer.play();
     }
 
     abstract public void getEliminated();

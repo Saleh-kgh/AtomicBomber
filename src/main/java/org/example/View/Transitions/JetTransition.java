@@ -1,8 +1,11 @@
 package org.example.View.Transitions;
 
+import javafx.animation.PauseTransition;
 import javafx.animation.Transition;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import org.example.Controller.GameController;
 import org.example.Model.Game;
 import org.example.Model.GameObject.*;
 import org.example.View.Animations.JetExplosion;
@@ -107,9 +110,17 @@ public class JetTransition extends Transition {
             return;
         jet.setHit(true);
         jet.getJetTransition().stop();
-
         JetExplosion jetExplosion = new JetExplosion(jet, gamePane);
         jetExplosion.play();
+
+        GameController gameController = new GameController();
+        gameController.pauseTransitions(jet.getGame().getCurrentWave());
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            gameController.defeated(game.getCurrentWave());
+        });
+        pause.play();
     }
 
     private void checkCollision() {

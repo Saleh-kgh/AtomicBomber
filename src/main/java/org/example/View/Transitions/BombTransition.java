@@ -99,13 +99,18 @@ public class BombTransition extends Transition {
     }
 
     private void activateNextWave(Wave currentWave) {
+        GameController gameController = new GameController();
+        gameController.cleanWaveMess(currentWave);
+
         int index = game.getWaves().indexOf(currentWave) + 1;
         if (index >= game.getNumberOfWaves()) {
-            // end game entirely
+            gameController.achievedVictory(currentWave);
+            gameController.completedWave(currentWave);
             return;
         }
+
         game.setCurrentWave(game.getWaves().get(index));
-        GameController gameController = new GameController();
+
         switch (index) {
             case 1:
                 gameController.designWave2(game.getWaves().get(index));
@@ -114,6 +119,7 @@ public class BombTransition extends Transition {
                 gameController.designWave3(game.getWaves().get(index));
                 break;
         }
+        gameController.completedWave(currentWave);
     }
 
     private void destroyNearObjects() {

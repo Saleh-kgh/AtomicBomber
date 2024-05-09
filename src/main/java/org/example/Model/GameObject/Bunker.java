@@ -25,6 +25,7 @@ public class Bunker extends Facility {
             getGame().setHitBombs(getGame().getHitBombs() + 1);
             getGame().setKills(getGame().getKills() + 2);
             getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 2);
+            playExplosionSound();
             this.getFacilityExplosion().play();
         }
     }
