@@ -11,7 +11,6 @@ public class BombRegular extends Bomb{
 
     public BombRegular(Jet jet, Game game) {
         super(jet, game, 100);
-        jet.setRemainingRegularBombs(jet.getRemainingRegularBombs() - 1);
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/BombRegular.png").toExternalForm())));
 

@@ -12,39 +12,30 @@ public class Jet extends Rectangle {
     private final int height = 30;
     private final int width = 100;
     private final Game game;
-    private int remainingRegularBombs;
     private int remainingAtomicBombs;
     private int remainingClusterBombs;
     private int freezeChargeLevel;
     private boolean isInvulnerable;
+    private int remainingLives;
     private boolean isHit;
-    private int bombsShot;
-    private int bombsHit;
     private JetTransition jetTransition;
-    //private JetExplosionAnim jetExplosionAnim;
 
     public Jet(Game game) {
         super(110, 22);
-        setX(100);
+        setX(300);
         setY(500);
         this.game = game;
+        remainingLives= 3;
         remainingAtomicBombs  = 0;
-        remainingRegularBombs = 3;
         remainingClusterBombs = 0;
         freezeChargeLevel = 0;
         isInvulnerable = false;
-        bombsShot = 0;
-        bombsHit = 0;
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/F-35Jet.png").toExternalForm())));
     }
 
     public Game getGame() {
         return game;
-    }
-
-    public int getRemainingRegularBombs() {
-        return remainingRegularBombs;
     }
 
     public int getRemainingAtomicBombs() {
@@ -59,16 +50,14 @@ public class Jet extends Rectangle {
         return freezeChargeLevel;
     }
 
+    public String getFreezeWeaponStatus() {
+        if (freezeChargeLevel > 5)
+            return "Ready";
+        return "Empty";
+    }
+
     public boolean isInvulnerable() {
         return isInvulnerable;
-    }
-
-    public int getBombsShot() {
-        return bombsShot;
-    }
-
-    public int getBombsHit() {
-        return bombsHit;
     }
 
     public boolean isHit() {
@@ -87,10 +76,6 @@ public class Jet extends Rectangle {
         isHit = hit;
     }
 
-    public void setRemainingRegularBombs(int remainingRegularBombs) {
-        this.remainingRegularBombs = remainingRegularBombs;
-    }
-
     public void setRemainingAtomicBombs(int remainingAtomicBombs) {
         this.remainingAtomicBombs = remainingAtomicBombs;
     }
@@ -107,12 +92,12 @@ public class Jet extends Rectangle {
         isInvulnerable = invulnerable;
     }
 
-    public void setBombsShot(int bombsShot) {
-        this.bombsShot = bombsShot;
+    public int getRemainingLives() {
+        return remainingLives;
     }
 
-    public void setBombsHit(int bombsHit) {
-        this.bombsHit = bombsHit;
+    public void setRemainingLives(int remainingLives) {
+        this.remainingLives = remainingLives;
     }
 
     public void fireRegularBomb() {

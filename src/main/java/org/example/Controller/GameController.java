@@ -146,6 +146,8 @@ public class GameController {
     public void releaseBombRegular(Game game) {
         BombRegular bombRegular = new BombRegular(game.getJet(), game);
         bombRegular.getBombTransition().play();
+        game.setShotBombs(game.getShotBombs() + 1);
+        game.getCurrentWave().setShotBombs(game.getCurrentWave().getShotBombs() + 1);
     }
 
     public void pauseTransitions(Wave wave) {
@@ -180,7 +182,7 @@ public class GameController {
         Label waveLabel = new Label(message);
         waveLabel.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 60px; -fx-font-weight: bold;");
         wave.getPane().getChildren().add(waveLabel);
-        waveLabel.setLayoutX((1520 - waveLabel.getWidth()) / 2);
+        waveLabel.setLayoutX((1450 - waveLabel.getWidth()) / 2);
         waveLabel.setLayoutY(300);
 
         pauseTransitions(wave);

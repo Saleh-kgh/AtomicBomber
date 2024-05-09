@@ -92,7 +92,7 @@ public class BombTransition extends Transition {
         Wave wave = game.getCurrentWave();
         int numberOfGameObjects = wave.getRemainingTanks() + wave.getRemainingBpms() + wave.getRemainingTrucks()
                                     +wave.getRemainingBuildings() + wave.getRemainingBunkers();
-        
+
         if (numberOfGameObjects == 0) {
             activateNextWave(wave);
         }
@@ -131,7 +131,7 @@ public class BombTransition extends Transition {
                 destroyedBPMs.add(bpm);
 
         for (BPM bpm : destroyedBPMs) {
-            bpm.getVehicleTransition().explode();
+            bpm.getEliminated();
         }
 
         game.getCurrentWave().getBpms().removeAll(destroyedBPMs);
@@ -145,7 +145,7 @@ public class BombTransition extends Transition {
                     destroyedTanks.add(tank);
 
         for (Tank tank : destroyedTanks) {
-            tank.getVehicleTransition().explode();
+            tank.getEliminated();
         }
 
         game.getCurrentWave().getTanks().removeAll(destroyedTanks);
@@ -158,7 +158,7 @@ public class BombTransition extends Transition {
                 destroyedTrucks.add(truck);
 
         for (Truck truck : destroyedTrucks) {
-            truck.getVehicleTransition().explode();
+            truck.getEliminated();
         }
 
         game.getCurrentWave().getTanks().removeAll(destroyedTrucks);
@@ -190,11 +190,7 @@ public class BombTransition extends Transition {
         game.getCurrentWave().getBuildings().removeAll(destroyedBuildings);
 
         for (Building building : destroyedBuildings) {
-            if (!building.isHit()) {
-                building.getFacilityExplosion().play();
-                building.setHit(true);
-                building.getWave().setRemainingBuildings(building.getWave().getRemainingBuildings() - 1);
-            }
+            building.getEliminated();
         }
     }
 }

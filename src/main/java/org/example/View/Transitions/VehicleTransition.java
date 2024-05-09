@@ -57,11 +57,7 @@ public class VehicleTransition extends Transition {
     }
 
     public void explode() {
-        if (vehicle.isHit())
-            return;
-        vehicle.setHit(true);
         vehicle.getVehicleTransition().stop();
-        vehicle.getEliminated();
         vehicle.getVehicleExplosion().play();
     }
 }

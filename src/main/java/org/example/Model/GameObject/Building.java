@@ -15,4 +15,17 @@ public class Building extends Facility {
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/Building.png").toExternalForm())));
     }
+
+    @Override
+    public void getEliminated() {
+        if (!this.isHit()) {
+            setHit(true);
+            getWave().setRemainingBuildings(getWave().getRemainingBuildings() - 1);
+            getWave().setHitBombs(getWave().getHitBombs() + 1);
+            getGame().setHitBombs(getGame().getHitBombs() + 1);
+            getGame().setKills(getGame().getKills() + 2);
+            getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 2);
+            this.getFacilityExplosion().play();
+        }
+    }
 }

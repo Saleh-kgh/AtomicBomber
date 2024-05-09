@@ -34,11 +34,15 @@ public class Tank extends Vehicle {
 
     @Override
     public void getEliminated() {
-        getWave().setRemainingTanks(getWave().getRemainingTanks() - 1);
-        getWave().setHitBombs(getWave().getHitBombs() + 1);
-        getGame().setHitBombs(getGame().getHitBombs() + 1);
-        getGame().setKills(getGame().getKills() + 2);
-
-        activateNext();
+        if (!isHit()) {
+            setHit(true);
+            getWave().setRemainingTanks(getWave().getRemainingTanks() - 1);
+            getWave().setHitBombs(getWave().getHitBombs() + 1);
+            getGame().setHitBombs(getGame().getHitBombs() + 1);
+            getGame().setKills(getGame().getKills() + 2);
+            getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 2);
+            this.getVehicleTransition().explode();
+            activateNext();
+        }
     }
 }

@@ -15,6 +15,7 @@ import javafx.util.Duration;
 import org.example.Controller.GameController;
 import org.example.Model.*;
 import org.example.Model.GameObject.Jet;
+import org.example.View.Transitions.HUDupdate;
 
 import java.io.File;
 
@@ -30,7 +31,7 @@ public class GameView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        setMediaPlayer("fortunateSon");
+        setMediaPlayerMusic("fortunateSon");
         musicPlayCommand(true);
 
         gamePane = new Pane();
@@ -42,6 +43,7 @@ public class GameView extends Application {
         setUpInitialWave();
         game.setCurrentWave(wave1);
         startWaves();
+        setUpHud();
 
         Scene scene = new Scene(gamePane);
         stage.setScene(scene);
@@ -50,6 +52,7 @@ public class GameView extends Application {
         stage.show();
 
         scene.setOnKeyPressed(event -> {
+
             GameController gameController = new GameController();
             if (!game.isPaused()) {
                 switch (event.getCode()) {
@@ -101,7 +104,7 @@ public class GameView extends Application {
         gameController.designWave1(wave1);
     }
 
-    private void setMediaPlayer(String musicName) {
+    public void setMediaPlayerMusic(String musicName) {
         File file = new File("D:/AP/AtomicBomber/AlphaVersion/src/main/resources/media/" + musicName +".mp3");
         Media media = new Media(file.toURI().toString());
 
@@ -115,5 +118,51 @@ public class GameView extends Application {
             mediaPlayer.play();
         else
             mediaPlayer.stop();
+    }
+
+    private void setUpHud() {
+        Label atomicBombCount = new Label("Atomic Bombs: X " + jet.getRemainingAtomicBombs());
+        atomicBombCount.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
+        gamePane.getChildren().add(atomicBombCount);
+        atomicBombCount.setLayoutX(50);
+        atomicBombCount.setLayoutY(50);
+
+
+        Label clusterBombCount = new Label("cluster Bombs: X " + jet.getRemainingClusterBombs());
+        clusterBombCount.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
+        gamePane.getChildren().add(clusterBombCount);
+        clusterBombCount.setLayoutX(300);
+        clusterBombCount.setLayoutY(50);
+
+
+        Label jetRemainingLives = new Label("Jet Lives: X " + jet.getRemainingLives());
+        jetRemainingLives.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
+        gamePane.getChildren().add(jetRemainingLives);
+        jetRemainingLives.setLayoutX(50);
+        jetRemainingLives.setLayoutY(100);
+
+
+        Label FreezeWeaponStatus = new Label("Freeze Weapon: " + jet.getFreezeWeaponStatus());
+        FreezeWeaponStatus.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
+        gamePane.getChildren().add(FreezeWeaponStatus);
+        FreezeWeaponStatus.setLayoutX(320);
+        FreezeWeaponStatus.setLayoutY(100);
+
+
+        Label killsCount = new Label("Kills: X " + game.getKills());
+        killsCount.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
+        gamePane.getChildren().add(killsCount);
+        killsCount.setLayoutX(200);
+        killsCount.setLayoutY(100);
+
+
+        Label currentWaveNumber = new Label("Wave " + game.getCurrentWave().getNumber());
+        currentWaveNumber.setStyle("-fx-text-fill: linear-gradient(#FFA500, #FF4500); -fx-font-family: \"Arial\"; -fx-font-size: 20px; -fx-font-weight: bold;");
+        gamePane.getChildren().add(currentWaveNumber);
+        currentWaveNumber.setLayoutX(720);
+        currentWaveNumber.setLayoutY(25);
+
+        HUDupdate hudUpdate = new HUDupdate(game, atomicBombCount, clusterBombCount, jetRemainingLives, FreezeWeaponStatus, killsCount, currentWaveNumber);
+        hudUpdate.play();
     }
 }

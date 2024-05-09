@@ -57,11 +57,15 @@ public class BPM extends Vehicle {
 
     @Override
     public void getEliminated() {
-        getWave().setRemainingBpms(getWave().getRemainingBpms() - 1);
-        getWave().setHitBombs(getWave().getHitBombs() + 1);
-        getGame().setHitBombs(getGame().getHitBombs() + 1);
-        getGame().setKills(getGame().getKills() + 3);
-
-        activateNext();
+        if (!isHit()) {
+            setHit(true);
+            getWave().setRemainingBpms(getWave().getRemainingBpms() - 1);
+            getWave().setHitBombs(getWave().getHitBombs() + 1);
+            getGame().setHitBombs(getGame().getHitBombs() + 1);
+            getGame().setKills(getGame().getKills() + 3);
+            getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 3);
+            this.getVehicleTransition().explode();
+            activateNext();
+        }
     }
 }

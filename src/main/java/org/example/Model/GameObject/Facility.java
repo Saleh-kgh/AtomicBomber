@@ -5,7 +5,7 @@ import org.example.Model.Game;
 import org.example.Model.Wave;
 import org.example.View.Animations.FacilityExplosion;
 
-public class Facility extends Rectangle {
+public abstract class Facility extends Rectangle {
 
     private final int height;
     private final int width;
@@ -50,4 +50,6 @@ public class Facility extends Rectangle {
     public void setFacilityExplosion(FacilityExplosion facilityExplosion) {
         this.facilityExplosion = facilityExplosion;
     }
+
+    abstract public void getEliminated();
 }

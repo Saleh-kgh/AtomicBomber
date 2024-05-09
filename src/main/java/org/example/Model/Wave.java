@@ -61,6 +61,10 @@ public class Wave {
         return remainingBpms;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     public void setRemainingBpms(int remainingBpms) {
         this.remainingBpms = remainingBpms;
     }

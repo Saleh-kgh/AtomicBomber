@@ -34,11 +34,15 @@ public class Truck extends Vehicle {
 
     @Override
     public void getEliminated() {
-        getWave().setRemainingTrucks(getWave().getRemainingTrucks() - 1);
-        getWave().setHitBombs(getWave().getHitBombs() + 1);
-        getGame().setHitBombs(getGame().getHitBombs() + 1);
-        getGame().setKills(getGame().getKills() + 1);
-
-        activateNext();
+        if (!isHit()) {
+            setHit(true);
+            getWave().setRemainingTrucks(getWave().getRemainingTrucks() - 1);
+            getWave().setHitBombs(getWave().getHitBombs() + 1);
+            getGame().setHitBombs(getGame().getHitBombs() + 1);
+            getGame().setKills(getGame().getKills() + 1);
+            getGame().getJet().setFreezeChargeLevel(getGame().getJet().getFreezeChargeLevel() + 1);
+            this.getVehicleTransition().explode();
+            activateNext();
+        }
     }
 }
