@@ -61,7 +61,7 @@ public class VehicleTransition extends Transition {
             return;
         vehicle.setHit(true);
         vehicle.getVehicleTransition().stop();
-
+        vehicle.getEliminated();
         vehicle.getVehicleExplosion().play();
     }
 }

@@ -1,11 +1,17 @@
 package org.example.View.Menu;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.Controller.GameController;
 import org.example.Model.*;
 import org.example.Model.GameObject.Jet;
@@ -35,7 +41,7 @@ public class GameView extends Application {
         jet.getJetTransition().play();
         setUpInitialWave();
         game.setCurrentWave(wave1);
-        wave1.startWave();
+        startWaves();
 
         Scene scene = new Scene(gamePane);
         stage.setScene(scene);
@@ -45,17 +51,30 @@ public class GameView extends Application {
 
         scene.setOnKeyPressed(event -> {
             GameController gameController = new GameController();
-            switch (event.getCode()) {
-                case UP:
-                    gameController.setJetDirectionUp(jet);
-                    break;
-                case DOWN:
-                    gameController.setJetDirectionDown(jet);
-                    break;
-                case SPACE:
-                    gameController.releaseBombRegular(game);
-                default:
-                    break;
+            if (!game.isPaused()) {
+                switch (event.getCode()) {
+                    case UP:
+                        gameController.setJetDirectionUp(jet);
+                        break;
+                    case DOWN:
+                        gameController.setJetDirectionDown(jet);
+                        break;
+                    case SPACE:
+                        gameController.releaseBombRegular(game);
+                        break;
+                    case P:
+                        gameController.pauseTransitions(game.getCurrentWave());
+                        break;
+                    case O:
+                        gameController.resumeTransitions(game.getCurrentWave());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else {
+                if (event.getCode() == KeyCode.O)
+                    gameController.resumeTransitions(game.getCurrentWave());
             }
         });
     }
@@ -72,12 +91,14 @@ public class GameView extends Application {
         wave2 = new Wave(game, gamePane, 2);
         wave3 = new Wave(game, gamePane, 3);
 
-        GameController gameController = new GameController();
-        gameController.designWave1(wave1);
-
         game.addToWaves(wave1);
         game.addToWaves(wave2);
         game.addToWaves(wave3);
+    }
+
+    private void startWaves() {
+        GameController gameController = new GameController();
+        gameController.designWave1(wave1);
     }
 
     private void setMediaPlayer(String musicName) {

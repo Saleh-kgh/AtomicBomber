@@ -9,7 +9,8 @@ public class Player {
     private String avatarAddress;
     private int totalKills;
     private int difficultyBasedKills;
-    private int score;
+    private int shotBombs;
+    private int hitBombs;
     private int finalWave;
     private double accuracy;
     private int currentDifficulty; // for easy 2 for med 3 for hard
@@ -20,9 +21,11 @@ public class Player {
         this.username = username;
         this.password = password;
         this.setRandomAvatar();
+        currentDifficulty = 1;
         totalKills = 0;
         difficultyBasedKills = 0;
-        score = 0;
+        shotBombs = 0;
+        hitBombs = 0;
         finalWave = 0;
         accuracy = 0;
         players.add(this);
@@ -77,6 +80,14 @@ public class Player {
         this.avatarAddress = avatarAddress;
     }
 
+    public int getHitBombs() {
+        return hitBombs;
+    }
+
+    public void setHitBombs(int hitBombs) {
+        this.hitBombs = hitBombs;
+    }
+
     public double getAccuracy() {
         return accuracy;
     }
@@ -101,12 +112,12 @@ public class Player {
         this.totalKills = totalKills;
     }
 
-    public int getScore() {
-        return score;
+    public int getShotBombs() {
+        return shotBombs;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setShotBombs(int shotBombs) {
+        this.shotBombs = shotBombs;
     }
 
     public int getFinalWave() {

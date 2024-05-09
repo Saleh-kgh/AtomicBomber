@@ -14,22 +14,31 @@ public class Truck extends Vehicle {
         setY(700);
         switch (direction) {
             case 1:
-                setX(-250);
+                setX(-200);
                 break;
             case -1:
-                setX(1780);
+                setX(1740);
                 this.setScaleX(-1);
                 break;
         }
     }
 
-    @Override
-    public void activateNext() {
+    private void activateNext() {
         int index = 0;
         for (Truck truck : getGame().getCurrentWave().getTrucks())
             if (truck.equals(this))
                 index = getGame().getCurrentWave().getTrucks().indexOf(this) + 1;
         if (getGame().getCurrentWave().getTrucks().size() > index)
             getGame().getCurrentWave().getTrucks().get(index).getVehicleTransition().play();
+    }
+
+    @Override
+    public void getEliminated() {
+        getWave().setRemainingTrucks(getWave().getRemainingTrucks() - 1);
+        getWave().setHitBombs(getWave().getHitBombs() + 1);
+        getGame().setHitBombs(getGame().getHitBombs() + 1);
+        getGame().setKills(getGame().getKills() + 1);
+
+        activateNext();
     }
 }

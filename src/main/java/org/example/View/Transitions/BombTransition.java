@@ -92,17 +92,27 @@ public class BombTransition extends Transition {
         Wave wave = game.getCurrentWave();
         int numberOfGameObjects = wave.getRemainingTanks() + wave.getRemainingBpms() + wave.getRemainingTrucks()
                                     +wave.getRemainingBuildings() + wave.getRemainingBunkers();
-
+        
         if (numberOfGameObjects == 0) {
-            int index = game.getWaves().indexOf(wave) + 1;
+            activateNextWave(wave);
+        }
+    }
 
-            if (index >= game.getNumberOfWaves()) {
-                // end game entirely
-                return;
-            }
-
-            GameController gameController = new GameController();
-            gameController.designWave2(game.getWaves().get(index));
+    private void activateNextWave(Wave currentWave) {
+        int index = game.getWaves().indexOf(currentWave) + 1;
+        if (index >= game.getNumberOfWaves()) {
+            // end game entirely
+            return;
+        }
+        game.setCurrentWave(game.getWaves().get(index));
+        GameController gameController = new GameController();
+        switch (index) {
+            case 1:
+                gameController.designWave2(game.getWaves().get(index));
+                break;
+            case 2:
+                gameController.designWave3(game.getWaves().get(index));
+                break;
         }
     }
 
@@ -117,12 +127,11 @@ public class BombTransition extends Transition {
     private void destroyBpms() {
         ArrayList<BPM> destroyedBPMs = new ArrayList<>();
         for (BPM bpm : game.getCurrentWave().getBpms())
-            if (Math.abs(bpm.getX() + bpm.getWidth()/2 - bomb.getX()) < bomb.getRadius())
+            if (Math.abs(bpm.getX() + bpm.getWidth()/2 - bomb.getX() - bomb.getWidth()/2) < bomb.getRadius())
                 destroyedBPMs.add(bpm);
 
         for (BPM bpm : destroyedBPMs) {
             bpm.getVehicleTransition().explode();
-            bpm.activateNext();
         }
 
         game.getCurrentWave().getBpms().removeAll(destroyedBPMs);
@@ -131,12 +140,12 @@ public class BombTransition extends Transition {
     private void destroyTanks() {
         ArrayList<Tank> destroyedTanks = new ArrayList<>();
         for (Tank tank : game.getCurrentWave().getTanks())
-            if (Math.abs(tank.getX() + tank.getWidth()/2 - bomb.getX()) < bomb.getRadius())
-                destroyedTanks.add(tank);
+            if (Math.abs(tank.getX() + tank.getWidth()/2 - bomb.getX() - bomb.getWidth()/2) < bomb.getRadius())
+                if (!tank.isHit())
+                    destroyedTanks.add(tank);
 
         for (Tank tank : destroyedTanks) {
             tank.getVehicleTransition().explode();
-            tank.activateNext();
         }
 
         game.getCurrentWave().getTanks().removeAll(destroyedTanks);
@@ -145,12 +154,11 @@ public class BombTransition extends Transition {
     private void destroyTrucks() {
         ArrayList<Truck> destroyedTrucks = new ArrayList<>();
         for (Truck truck : game.getCurrentWave().getTrucks())
-            if (Math.abs(truck.getX() + truck.getWidth()/2 - bomb.getX()) < bomb.getRadius())
+            if (Math.abs(truck.getX() + truck.getWidth()/2 - bomb.getX() - bomb.getWidth()/2) < bomb.getRadius())
                 destroyedTrucks.add(truck);
 
         for (Truck truck : destroyedTrucks) {
             truck.getVehicleTransition().explode();
-            truck.activateNext();
         }
 
         game.getCurrentWave().getTanks().removeAll(destroyedTrucks);
@@ -159,24 +167,34 @@ public class BombTransition extends Transition {
     private void destroyBunkers() {
         ArrayList<Bunker> destroyedBunkers = new ArrayList<>();
         for (Bunker bunker : game.getCurrentWave().getBunkers())
-            if (Math.abs(bunker.getX() + bunker.getWidth()/2 - bomb.getX()) < bomb.getRadius())
+            if (Math.abs(bunker.getX() + bunker.getWidth()/2 - bomb.getX() - bomb.getWidth()/2) < bomb.getRadius())
                 destroyedBunkers .add(bunker);
 
         game.getCurrentWave().getBunkers().removeAll(destroyedBunkers);
 
-        for (Bunker bunker : destroyedBunkers)
-            bunker.getFacilityExplosion().play();
+        for (Bunker bunker : destroyedBunkers) {
+            if (!bunker.isHit()) {
+                bunker.getFacilityExplosion().play();
+                bunker.setHit(true);
+                bunker.getWave().setRemainingBuildings(bunker.getWave().getRemainingBuildings() - 1);
+            }
+        }
     }
 
     private void destroyBuildings() {
         ArrayList<Building> destroyedBuildings = new ArrayList<>();
         for (Building building : game.getCurrentWave().getBuildings())
-            if (Math.abs(building.getX() + building.getWidth()/2 - bomb.getX()) < bomb.getRadius())
+            if (Math.abs(building.getX() + building.getWidth()/2 - bomb.getX() - bomb.getWidth()/2) < bomb.getRadius())
                 destroyedBuildings .add(building);
 
         game.getCurrentWave().getBuildings().removeAll(destroyedBuildings);
 
-        for (Building building : destroyedBuildings)
-            building.getFacilityExplosion().play();
+        for (Building building : destroyedBuildings) {
+            if (!building.isHit()) {
+                building.getFacilityExplosion().play();
+                building.setHit(true);
+                building.getWave().setRemainingBuildings(building.getWave().getRemainingBuildings() - 1);
+            }
+        }
     }
 }

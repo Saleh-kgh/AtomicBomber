@@ -2,6 +2,7 @@ package org.example.Model.GameObject;
 
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
+import org.example.Model.Wave;
 import org.example.View.Animations.VehicleExplosion;
 import org.example.View.Transitions.VehicleTransition;
 
@@ -11,6 +12,7 @@ public abstract class Vehicle extends Rectangle {
     private final int width;
     private final int length;
     private final Game game;
+    private final Wave wave;
     private final VehicleTransition vehicleTransition;
     private final VehicleExplosion vehicleExplosion;
     private boolean isFrozen;
@@ -22,6 +24,7 @@ public abstract class Vehicle extends Rectangle {
         this.width = width;
         this.length = length;
         this.game = game;
+        this.wave = game.getCurrentWave();
         this.direction = direction;
         game.getGamePane().getChildren().add(this);
         this.vehicleTransition = new VehicleTransition(this, game);
@@ -38,6 +41,10 @@ public abstract class Vehicle extends Rectangle {
 
     public Game getGame() {
         return game;
+    }
+
+    public Wave getWave() {
+        return wave;
     }
 
     public VehicleTransition getVehicleTransition() {
@@ -72,5 +79,5 @@ public abstract class Vehicle extends Rectangle {
         this.difficultyLevel = difficultyLevel;
     }
 
-    abstract public void activateNext();
+    abstract public void getEliminated();
 }

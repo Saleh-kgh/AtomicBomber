@@ -2,6 +2,7 @@ package org.example.Model.GameObject;
 
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
+import org.example.Model.Wave;
 import org.example.View.Animations.FacilityExplosion;
 
 public class Facility extends Rectangle {
@@ -9,6 +10,7 @@ public class Facility extends Rectangle {
     private final int height;
     private final int width;
     private final Game game;
+    private final Wave wave;
     private boolean isHit;
     private FacilityExplosion facilityExplosion;
 
@@ -17,6 +19,7 @@ public class Facility extends Rectangle {
         this.width = width;
         this.height = height;
         this.game = game;
+        this.wave = game.getCurrentWave();
         this.isHit = false;
         setX(x);
         setY(740 - height);
@@ -30,6 +33,10 @@ public class Facility extends Rectangle {
 
     public boolean isHit() {
         return isHit;
+    }
+
+    public Wave getWave() {
+        return wave;
     }
 
     public void setHit(boolean hit) {

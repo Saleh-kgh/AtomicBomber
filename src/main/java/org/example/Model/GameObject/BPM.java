@@ -17,10 +17,10 @@ public class BPM extends Vehicle {
         setY(700);
         switch (direction) {
             case 1:
-                setX(-300);
+                setX(-450);
                 break;
             case -1:
-                setX(1720);
+                setX(1850);
                 this.setScaleX(-1);
                 break;
         }
@@ -45,13 +45,23 @@ public class BPM extends Vehicle {
 
     public void shootBullet() {
     }
-    @Override
-    public void activateNext() {
+
+    private void activateNext() {
         int index = 0;
         for (BPM bpm : getGame().getCurrentWave().getBpms())
             if (bpm.equals(this))
                 index = getGame().getCurrentWave().getBpms().indexOf(this) + 1;
         if (getGame().getCurrentWave().getBpms().size() > index)
             getGame().getCurrentWave().getBpms().get(index).getVehicleTransition().play();
+    }
+
+    @Override
+    public void getEliminated() {
+        getWave().setRemainingBpms(getWave().getRemainingBpms() - 1);
+        getWave().setHitBombs(getWave().getHitBombs() + 1);
+        getGame().setHitBombs(getGame().getHitBombs() + 1);
+        getGame().setKills(getGame().getKills() + 3);
+
+        activateNext();
     }
 }

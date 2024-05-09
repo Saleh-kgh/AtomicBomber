@@ -12,11 +12,14 @@ public class Game {
     private final Player player;
     private final GameView gameView;
     private final Pane gamePane;
+    private boolean isPaused;
     private final Jet jet;
+    private int difficultyLevel;
     private final int numberOfWaves;
     private Wave currentWave;
     private ArrayList<Wave> waves = new ArrayList<>();
-    private int score;
+    private int shotBombs;
+    private int hitBombs;
     private int kills;
 
     public Game(Player player, GameView gameView, Pane gamePane, int numberOfWaves) {
@@ -24,8 +27,11 @@ public class Game {
         this.gameView = gameView;
         this.gamePane = gamePane;
         this.numberOfWaves = numberOfWaves;
-        score = 0;
+        this.difficultyLevel = Player.getLoggedInPlayer().getCurrentDifficulty();
+        shotBombs = 0;
+        hitBombs = 0;
         kills = 0;
+        isPaused = true;
         jet = new Jet(this);
         jet.setJetTransition(new JetTransition(jet, this, gamePane));
     }
@@ -40,6 +46,30 @@ public class Game {
 
     public ArrayList<Wave> getWaves() {
         return waves;
+    }
+
+    public int getHitBombs() {
+        return hitBombs;
+    }
+
+    public void setHitBombs(int hitBombs) {
+        this.hitBombs = hitBombs;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
+    }
+
+    public int getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(int difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
     }
 
     public Wave getCurrentWave() {
@@ -66,16 +96,16 @@ public class Game {
         this.waves.add(wave);
     }
 
-    public int getScore() {
-        return score;
+    public int getShotBombs() {
+        return shotBombs;
     }
 
     public int getKills() {
         return kills;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setShotBombs(int shotBombs) {
+        this.shotBombs = shotBombs;
     }
 
     public void setKills(int kills) {
