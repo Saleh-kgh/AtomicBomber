@@ -1,5 +1,6 @@
 package org.example.Model.GameObject;
 
+import javafx.animation.Timeline;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -17,17 +18,19 @@ public class Bullet extends Rectangle {
     private final int width = 5;
     private final Game game;
     private BulletTransition bulletTransition;
-    private final BPM bpm;
+    private final Rectangle vehicle;
+    private Timeline timeline;
     private boolean hasHit;
 
-    public Bullet(Game game, BPM bpm) {
+    public Bullet(Game game, Rectangle vehicle, Timeline timeline) {
         super(10, 10);
         this.game = game;
-        this.bpm = bpm;
+        this.vehicle = vehicle;
         this.hasHit = false;
+        this.timeline = timeline;
 
-        setY(bpm.getY());
-        setX(bpm.getX() + 60);
+        setY(vehicle.getY());
+        setX(vehicle.getX() + 60);
         game.getGamePane().getChildren().add(this);
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/bullet.png").toExternalForm())));
@@ -41,6 +44,14 @@ public class Bullet extends Rectangle {
         return game;
     }
 
+    public Timeline getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(Timeline timeline) {
+        this.timeline = timeline;
+    }
+
     public BulletTransition getBulletTransition() {
         return bulletTransition;
     }
@@ -49,8 +60,8 @@ public class Bullet extends Rectangle {
         this.bulletTransition = bulletTransition;
     }
 
-    public BPM getBpm() {
-        return bpm;
+    public Rectangle getVehicle() {
+        return vehicle;
     }
 
     public boolean isHasHit() {
@@ -64,11 +75,13 @@ public class Bullet extends Rectangle {
     public void explode() {
         playExplosionSound();
 
-        Jet jet = bpm.getGame().getJet();
-        jet.setRemainingLives(jet.getRemainingLives() - 1);
-        if (jet.getRemainingLives() == 0) {
-            jet.getJetTransition().explode();
-            bpm.getShootingTimeline().stop();
+        Jet jet = getGame().getJet();
+        if (!jet.isInvulnerable()) {
+            jet.setRemainingLives(jet.getRemainingLives() - 1);
+            if (jet.getRemainingLives() == 0) {
+                jet.getJetTransition().explode();
+                getTimeline().stop();
+            }
         }
     }
 

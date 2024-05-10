@@ -170,6 +170,17 @@ public class GameController {
         game.getCurrentWave().setShotBombs(game.getCurrentWave().getShotBombs() + 1);
     }
 
+    public void releaseBombAtomic(Game game) {
+        if (game.getJet().getRemainingAtomicBombs() > 0) {
+            game.getJet().setRemainingAtomicBombs(game.getJet().getRemainingAtomicBombs() - 1);
+            BombAtomic bombAtomic = new BombAtomic(game.getJet(), game);
+            game.getCurrentWave().addToAnimations(bombAtomic.getBombTransition());
+            bombAtomic.getBombTransition().play();
+            game.setShotBombs(game.getShotBombs() + 1);
+            game.getCurrentWave().setShotBombs(game.getCurrentWave().getShotBombs() + 1);
+        }
+    }
+
     public void pauseTransitions(Wave wave) {
         wave.getGame().setPaused(true);
         for (Transition transition : wave.getAnimations()) {
@@ -203,6 +214,14 @@ public class GameController {
                 designWave3(game.getWaves().get(index));
                 break;
         }
+    }
+
+    public void changeJetVulnerability(Game game) {
+        game.getJet().setInvulnerable(!game.getJet().isInvulnerable());
+    }
+
+    public void addToJetAtomicBombs(Game game) {
+        game.getJet().setRemainingAtomicBombs(game.getJet().getRemainingAtomicBombs() + 1);
     }
 
     private BackgroundImage createBackgroundImage () {

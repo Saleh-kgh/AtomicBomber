@@ -2,6 +2,7 @@ package org.example.View.Transitions;
 
 import javafx.animation.Transition;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.example.Model.Game;
 import org.example.Model.GameObject.BPM;
@@ -12,7 +13,7 @@ import org.example.View.Animations.BulletExplosion;
 
 public class BulletTransition extends Transition {
 
-    private final BPM bpm;
+    private final Rectangle vehicle;
     private final Bullet bullet;
     private final double velocity = 100;
     private double velocityX;
@@ -25,15 +26,15 @@ public class BulletTransition extends Transition {
         this.game = game;
         this.gamePane = game.getGamePane();
         this.bullet = bullet;
-        this.bpm = bullet.getBpm();
+        this.vehicle = bullet.getVehicle();
         setVelocityX();
         setVelocityY();
         this.setCycleCount(-1);
         this.setCycleDuration(Duration.millis(duration));
     }
 
-    public BPM getBpm() {
-        return bpm;
+    public Rectangle getVehicle() {
+        return vehicle;
     }
 
     public Bullet getBullet() {
@@ -49,10 +50,10 @@ public class BulletTransition extends Transition {
     }
 
     private void setVelocityX() {
-        double distanceX = Math.abs(bpm.getX() - bpm.getGame().getJet().getX());
-        double distanceY = Math.abs(bpm.getY() - bpm.getGame().getJet().getY());
+        double distanceX = Math.abs(vehicle.getX() - bullet.getGame().getJet().getX());
+        double distanceY = Math.abs(vehicle.getY() - bullet.getGame().getJet().getY());
         velocityX = velocity * Math.cos(Math.atan(distanceY / distanceX));
-        if (bpm.getX() > bpm.getGame().getJet().getX())
+        if (vehicle.getX() > bullet.getGame().getJet().getX())
             velocityX = -1 * velocityX - 10;
         else velocityX += 10;
     }
@@ -62,8 +63,8 @@ public class BulletTransition extends Transition {
     }
 
     private void setVelocityY() {
-        double distanceX = Math.abs(bpm.getX() - bpm.getGame().getJet().getX());
-        double distanceY = Math.abs(bpm.getY() - bpm.getGame().getJet().getY());
+        double distanceX = Math.abs(vehicle.getX() - bullet.getGame().getJet().getX());
+        double distanceY = Math.abs(vehicle.getY() - bullet.getGame().getJet().getY());
         velocityY = -velocity * Math.sin(Math.atan(distanceY / distanceX));
     }
 
@@ -103,7 +104,7 @@ public class BulletTransition extends Transition {
             gamePane.getChildren().remove(bullet);
         }
 
-        if (bullet.intersects(bpm.getGame().getJet().getBoundsInParent()))
+        if (bullet.intersects(bullet.getGame().getJet().getBoundsInParent()))
             explode();
     }
 

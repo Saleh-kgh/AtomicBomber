@@ -13,11 +13,11 @@ public abstract class Bomb extends Rectangle {
     private Jet jet;
     private final Game game;
     private boolean isHit;
-    private Transition bombTransition;
+    private BombTransition bombTransition;
     //private BombExplosionAnim bombExplosionAnim;
 
     public Bomb(Jet jet, Game game, int radius) {
-        super(40, 10);
+        super(40, 15);
         this.game = game;
         this.jet = jet;
         this.radius = radius;
@@ -34,7 +34,7 @@ public abstract class Bomb extends Rectangle {
         return jet;
     }
 
-    public Transition getBombTransition() {
+    public BombTransition getBombTransition() {
         return bombTransition;
     }
 
@@ -48,10 +48,6 @@ public abstract class Bomb extends Rectangle {
 
     public void setHit(boolean hit) {
         isHit = hit;
-    }
-
-    public void setBombTransition(Transition bombTransition) {
-        this.bombTransition = bombTransition;
     }
 
     abstract public void explodeBomb();

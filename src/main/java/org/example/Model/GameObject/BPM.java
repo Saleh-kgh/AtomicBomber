@@ -53,19 +53,19 @@ public class BPM extends Vehicle {
         if (getWave().equals(getGame().getCurrentWave()) &&
                 !getGame().isPaused() &&
                 Math.abs(this.getX() - getGame().getJet().getX()) < this.getRadius() * getGame().getDifficultyLevel()) {
-            Bullet bullet1 = new Bullet(getGame(), this);
-            Bullet bullet2 = new Bullet(getGame(), this);
-            Bullet bullet3 = new Bullet(getGame(), this);
+            Bullet bullet1 = new Bullet(getGame(), this, shootingTimeline);
             bullet1.getBulletTransition().play();
 
             PauseTransition pause2 = new PauseTransition(Duration.seconds(0.3));
             pause2.setOnFinished(event -> {
+                Bullet bullet2 = new Bullet(getGame(), this, shootingTimeline);
                 bullet2.getBulletTransition().play();
             });
             pause2.play();
 
             PauseTransition pause3 = new PauseTransition(Duration.seconds(0.6));
             pause3.setOnFinished(event -> {
+                Bullet bullet3 = new Bullet(getGame(), this, shootingTimeline);
                 bullet3.getBulletTransition().play();
             });
             pause3.play();
