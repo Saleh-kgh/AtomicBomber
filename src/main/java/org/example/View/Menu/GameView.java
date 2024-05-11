@@ -65,8 +65,11 @@ public class GameView extends Application {
                     case SPACE:
                         gameController.releaseBombRegular(game);
                         break;
-                    case A:
+                    case R:
                         gameController.releaseBombAtomic(game);
+                        break;
+                    case C:
+                        gameController.releaseBombCluster(game);
                         break;
                     case L:
                         gameController.pauseTransitions(game.getCurrentWave());
@@ -80,8 +83,11 @@ public class GameView extends Application {
                     case I:
                         gameController.changeJetVulnerability(game);
                         break;
-                    case C:
-                        gameController.addToJetAtomicBombs(game);
+                    case A:
+                        gameController.addToJetBombAtomics(game);
+                        break;
+                    case Q:
+                        gameController.addToJetBombClusters(game);
                         break;
                     default:
                         break;

@@ -13,7 +13,7 @@ public class BombTransition extends Transition {
 
     private Jet jet;
     private final Bomb bomb;
-    private final double velocityX;
+    private double velocityX;
     private double velocityY;
     private final  double gravity = 10;
     private double degreeAngle;
@@ -31,6 +31,10 @@ public class BombTransition extends Transition {
         this.degreeAngle = jet.getJetTransition().getDegreeAngle();
         this.setCycleCount(-1);
         this.setCycleDuration(Duration.millis(duration));
+    }
+
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
     }
 
     public void setVelocityY(double velocityY) {

@@ -181,6 +181,17 @@ public class GameController {
         }
     }
 
+    public void releaseBombCluster(Game game) {
+        if (game.getJet().getRemainingClusterBombs() > 0) {
+            game.getJet().setRemainingClusterBombs(game.getJet().getRemainingClusterBombs() - 1);
+            BombCluster bombCluster = new BombCluster(game.getJet(), game);
+            game.getCurrentWave().addToAnimations(bombCluster.getBombTransition());
+            bombCluster.getBombTransition().play();
+            game.setShotBombs(game.getShotBombs() + 1);
+            game.getCurrentWave().setShotBombs(game.getCurrentWave().getShotBombs() + 1);
+        }
+    }
+
     public void pauseTransitions(Wave wave) {
         wave.getGame().setPaused(true);
         for (Transition transition : wave.getAnimations()) {
@@ -220,8 +231,12 @@ public class GameController {
         game.getJet().setInvulnerable(!game.getJet().isInvulnerable());
     }
 
-    public void addToJetAtomicBombs(Game game) {
+    public void addToJetBombAtomics(Game game) {
         game.getJet().setRemainingAtomicBombs(game.getJet().getRemainingAtomicBombs() + 1);
+    }
+
+    public void addToJetBombClusters(Game game) {
+        game.getJet().setRemainingClusterBombs(game.getJet().getRemainingClusterBombs() + 1);
     }
 
     private BackgroundImage createBackgroundImage () {
