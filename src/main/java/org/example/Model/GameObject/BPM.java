@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.util.Duration;
 import org.example.Model.Game;
+import org.example.Model.Player;
 
 import java.io.File;
 
@@ -20,7 +21,7 @@ public class BPM extends Vehicle {
 
     public BPM(Game game, int direction) {
         super(150, 50, game, direction);
-        this.radius = 200;
+        this.radius = 100 * game.getDifficultyLevel();
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/russianBPM.png").toExternalForm())));
 
@@ -80,7 +81,7 @@ public class BPM extends Vehicle {
 
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(1);
-        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setVolume(0.15 * Player.getLoggedInPlayer().getGameSoundVolume());
         mediaPlayer.play();
     }
 

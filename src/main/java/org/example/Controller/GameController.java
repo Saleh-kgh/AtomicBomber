@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.PauseTransition;
 import javafx.animation.Transition;
 import javafx.scene.control.Label;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,7 +20,23 @@ import java.util.ArrayList;
 
 public class GameController {
 
+    private BackgroundImage createBackgroundImage () {
+        Image image = new Image(GameController.class.getResource("/Pics/Backgrounds/dayForest.jpg").toExternalForm(), 1570 ,900, false, false);
+        BackgroundImage backgroundImage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        return backgroundImage;
+    }
+
     public void designWave1 (Wave wave) {
+        if (Player.getLoggedInPlayer().isThemeClassic()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            wave.getPane().setEffect(colorAdjust);
+        }
+
         relocateJet(wave);
 
         wave.getPane().setBackground(new Background(createBackgroundImage()));
@@ -142,6 +159,16 @@ public class GameController {
         wave.setRemainingTanks(3);
         tank1.getVehicleTransition().play();
 
+        Mig mig = new Mig(wave.getGame());
+        wave.addToAnimations(mig.getVehicleTransition());
+        PauseTransition pause = new PauseTransition(Duration.seconds(20));
+        pause.setOnFinished(event -> {
+            mig.getVehicleTransition().play();
+            mig.playAircraftSound();
+            giveMigAlarm(wave.getPane());
+        });
+        pause.play();
+
         announceWave("Wave 3", wave);
     }
 
@@ -239,21 +266,26 @@ public class GameController {
         game.getJet().setRemainingClusterBombs(game.getJet().getRemainingClusterBombs() + 1);
     }
 
-    private BackgroundImage createBackgroundImage () {
-        Image image = new Image(GameController.class.getResource("/Pics/Backgrounds/dayForest.jpg").toExternalForm(), 1570 ,900, false, false);
-        BackgroundImage backgroundImage = new BackgroundImage(image,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-        return backgroundImage;
-    }
-
     private void relocateJet(Wave wave) {
         Jet jet = wave.getGame().getJet();
         jet.setX(500);
         jet.setY(400);
         jet.getJetTransition().setDegreeAngle(0);
+    }
+
+    private void giveMigAlarm(Pane pane) {
+        Label alarmLabel = new Label("Alert: Incoming Mig!");
+        alarmLabel.setStyle("-fx-text-fill: linear-gradient(#fd6651, #c2201a); -fx-font-family: \"Arial\"; -fx-font-size: 60px; -fx-font-weight: bold;");
+        pane.getChildren().add(alarmLabel);
+        alarmLabel.toFront();
+        alarmLabel.setLayoutX((1200 - alarmLabel.getWidth()) / 2);
+        alarmLabel.setLayoutY(300);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+        pause.setOnFinished(event -> {
+            pane.getChildren().remove(alarmLabel);
+        });
+        pause.play();
     }
 
     private void announceWave(String message, Wave wave) {

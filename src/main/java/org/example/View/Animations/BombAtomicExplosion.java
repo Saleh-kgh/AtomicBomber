@@ -3,6 +3,7 @@ package org.example.View.Animations;
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -12,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.example.Model.GameObject.BombAtomic;
 import org.example.Model.GameObject.BombRegular;
+import org.example.Model.Player;
 
 public class BombAtomicExplosion extends Transition {
 
@@ -31,6 +33,11 @@ public class BombAtomicExplosion extends Transition {
         explosion.setY(bombAtomic.getY() - explosion.getHeight() + bombAtomic.getHeight() * 4);
         pane.getChildren().remove(bombAtomic);
         explosion.setFill(Color.TRANSPARENT);
+        if (Player.getLoggedInPlayer().isThemeClassic()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            explosion.setEffect(colorAdjust);
+        }
         pane.getChildren().add(explosion);
     }
 

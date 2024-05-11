@@ -1,8 +1,10 @@
 package org.example.Model.GameObject;
 
 import javafx.animation.Transition;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
+import org.example.Model.Player;
 import org.example.View.Transitions.BombTransition;
 
 public abstract class Bomb extends Rectangle {
@@ -24,6 +26,12 @@ public abstract class Bomb extends Rectangle {
         setX(jet.getX() + jet.getWidth()/2);
         setY(jet.getY());
         this.bombTransition = new BombTransition(this, jet, game, getGame().getGamePane());
+
+        if (Player.getLoggedInPlayer().isThemeClassic()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            this.setEffect(colorAdjust);
+        }
     }
 
     public Game getGame() {

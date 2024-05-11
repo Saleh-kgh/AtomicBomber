@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import org.example.View.Menu.GameView;
 import org.example.View.Menu.LoginView;
 import org.example.View.Menu.ProfileView;
+import org.example.View.Menu.SettingsView;
 
 import java.io.File;
 import java.net.URL;
@@ -33,7 +34,15 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void settingsAction() {}
+    private void settingsAction() {
+        mediaPlayer.stop();
+        SettingsView settingsView = new SettingsView();
+        try {
+            settingsView.start(LoginView.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     private void profileAction() {
@@ -60,9 +69,6 @@ public class MainViewController implements Initializable {
         }
     }
 
-    @FXML
-    private void setDifficultyAction() {}
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image image = new Image("file:///" + Player.getLoggedInPlayer().getAvatarAddress(), 260, 260, false, false);
@@ -73,7 +79,7 @@ public class MainViewController implements Initializable {
         media = new Media(file.toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Repeat indefinitely
-        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setVolume(Player.getLoggedInPlayer().getGameSoundVolume());
         mediaPlayer.play();
     }
 }

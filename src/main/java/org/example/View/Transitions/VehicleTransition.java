@@ -9,7 +9,7 @@ import org.example.Model.GameObject.Vehicle;
 public class VehicleTransition extends Transition {
 
     private Vehicle vehicle;
-    private final double velocityX;
+    private double velocityX;
     private int direction;
     private Game game;
     private Pane gamePane;
@@ -27,6 +27,10 @@ public class VehicleTransition extends Transition {
 
     public double getVelocityX() {
         return velocityX;
+    }
+
+    public void setVelocityX(double velocityX) {
+        this.velocityX = velocityX;
     }
 
     @Override

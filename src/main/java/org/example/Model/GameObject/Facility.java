@@ -1,9 +1,11 @@
 package org.example.Model.GameObject;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
+import org.example.Model.Player;
 import org.example.Model.Wave;
 import org.example.View.Animations.FacilityExplosion;
 
@@ -29,6 +31,12 @@ public abstract class Facility extends Rectangle {
         setY(740 - height);
         game.getGamePane().getChildren().add(this);
         facilityExplosion = new FacilityExplosion(this, game.getGamePane());
+
+        if (Player.getLoggedInPlayer().isThemeClassic()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            this.setEffect(colorAdjust);
+        }
     }
 
     public Game getGame() {
@@ -61,7 +69,7 @@ public abstract class Facility extends Rectangle {
 
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(1);
-        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setVolume(0.3 * Player.getLoggedInPlayer().getGameSoundVolume());
         mediaPlayer.play();
     }
 

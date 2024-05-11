@@ -7,6 +7,8 @@ public class Player {
     private String username;
     private String password;
     private String avatarAddress;
+    private int gameSoundVolume;
+    private boolean isThemeClassic;
     private int totalKills;
     private int difficultyBasedKills;
     private int shotBombs;
@@ -20,6 +22,8 @@ public class Player {
         this.username = username;
         this.password = password;
         this.setRandomAvatar();
+        isThemeClassic = false;
+        gameSoundVolume = 1;
         currentDifficulty = 1;
         totalKills = 0;
         difficultyBasedKills = 0;
@@ -108,6 +112,22 @@ public class Player {
 
     public int getShotBombs() {
         return shotBombs;
+    }
+
+    public int getGameSoundVolume() {
+        return gameSoundVolume;
+    }
+
+    public void setGameSoundVolume(int gameSoundVolume) {
+        this.gameSoundVolume = gameSoundVolume;
+    }
+
+    public boolean isThemeClassic() {
+        return isThemeClassic;
+    }
+
+    public void setThemeClassic(boolean themeClassic) {
+        isThemeClassic = themeClassic;
     }
 
     public void setShotBombs(int shotBombs) {

@@ -117,7 +117,7 @@ public class GameView extends Application {
         game.addToWaves(wave3);
     }
 
-    private void startWaves() {
+    public void startWaves() {
         GameController gameController = new GameController();
         gameController.designWave1(wave1);
     }
@@ -128,7 +128,7 @@ public class GameView extends Application {
 
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setVolume(0.5 * Player.getLoggedInPlayer().getGameSoundVolume());
     }
 
     public void musicPlayCommand(boolean play) {

@@ -5,6 +5,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import org.example.Model.Game;
+import org.example.Model.Player;
 import org.example.View.Animations.BombRegularExplosion;
 
 import java.io.File;
@@ -40,7 +41,7 @@ public class BombRegular extends Bomb{
 
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(1);
-        mediaPlayer.setVolume(0.15);
+        mediaPlayer.setVolume(0.15 * Player.getLoggedInPlayer().getGameSoundVolume());
         mediaPlayer.play();
     }
 }

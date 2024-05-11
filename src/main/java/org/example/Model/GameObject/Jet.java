@@ -1,10 +1,12 @@
 package org.example.Model.GameObject;
 
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
+import org.example.Model.Player;
 import org.example.View.Transitions.JetTransition;
 
 public class Jet extends Rectangle {
@@ -32,6 +34,12 @@ public class Jet extends Rectangle {
         isInvulnerable = false;
         this.setFill(new ImagePattern(new Image
                 (Jet.class.getResource("/Pics/Objects/F-35Jet.png").toExternalForm())));
+
+        if (Player.getLoggedInPlayer().isThemeClassic()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            this.setEffect(colorAdjust);
+        }
     }
 
     public Game getGame() {

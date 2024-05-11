@@ -65,7 +65,9 @@ public class BulletTransition extends Transition {
     private void setVelocityY() {
         double distanceX = Math.abs(vehicle.getX() - bullet.getGame().getJet().getX());
         double distanceY = Math.abs(vehicle.getY() - bullet.getGame().getJet().getY());
-        velocityY = -velocity * Math.sin(Math.atan(distanceY / distanceX));
+        velocityY = velocity * Math.sin(Math.atan(distanceY / distanceX));
+        if (vehicle.getY() > bullet.getGame().getJet().getY())
+            velocityY = -velocityY;
     }
 
     public Game getGame() {
@@ -101,6 +103,10 @@ public class BulletTransition extends Transition {
         if (bullet.getY() + deltaY + 80 > 0 && bullet.getY() + deltaY < 700)
             bullet.setY(bullet.getY() + deltaY);
         else if (bullet.getY() + deltaY < -80) {
+            gamePane.getChildren().remove(bullet);
+        }
+        else if (bullet.getY() > 700) {
+            bullet.explode();
             gamePane.getChildren().remove(bullet);
         }
 

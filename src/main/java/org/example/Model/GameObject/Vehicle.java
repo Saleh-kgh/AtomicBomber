@@ -1,9 +1,11 @@
 package org.example.Model.GameObject;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import org.example.Model.Game;
+import org.example.Model.Player;
 import org.example.Model.Wave;
 import org.example.View.Animations.VehicleExplosion;
 import org.example.View.Transitions.VehicleTransition;
@@ -33,6 +35,12 @@ public abstract class Vehicle extends Rectangle {
         game.getGamePane().getChildren().add(this);
         this.vehicleTransition = new VehicleTransition(this, game);
         this.vehicleExplosion = new VehicleExplosion(this, game.getGamePane());
+
+        if (Player.getLoggedInPlayer().isThemeClassic()) {
+            ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setSaturation(-1);
+            this.setEffect(colorAdjust);
+        }
     }
 
     public int getDirection() {
@@ -89,7 +97,7 @@ public abstract class Vehicle extends Rectangle {
 
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(1);
-        mediaPlayer.setVolume(0.3);
+        mediaPlayer.setVolume(0.3 * Player.getLoggedInPlayer().getGameSoundVolume());
         mediaPlayer.play();
     }
 
