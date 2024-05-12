@@ -49,6 +49,7 @@ public class Mig extends Vehicle {
     private void shoot() {
         if (getWave().equals(getGame().getCurrentWave()) &&
                 !getGame().isPaused() &&
+                !getGame().isFrozen() &&
                 Math.abs(this.getX() - getGame().getJet().getX()) < this.getRadius() * getGame().getDifficultyLevel() &&
                 Math.abs(this.getY() - getGame().getJet().getY()) < this.getRadius() * getGame().getDifficultyLevel()) {
             Bullet bullet1 = new Bullet(getGame(), this, shootingTimeline);

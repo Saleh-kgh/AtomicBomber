@@ -219,6 +219,23 @@ public class GameController {
         }
     }
 
+    public void activeFreezeWeapon(Game game) {
+        Wave wave = game.getCurrentWave();
+        pauseTransitions(game.getCurrentWave());
+        game.getJet().getJetTransition().play();
+        game.setPaused(false);
+        game.setFrozen(true);
+        game.getJet().setFreezeChargeLevel(0);
+
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(7));
+        pauseTransition.setOnFinished(event -> {
+            if (game.getCurrentWave().equals(wave))
+                resumeTransitions(wave);
+            game.setFrozen(false);
+        });
+        pauseTransition.play();
+    }
+
     public void pauseTransitions(Wave wave) {
         wave.getGame().setPaused(true);
         for (Transition transition : wave.getAnimations()) {

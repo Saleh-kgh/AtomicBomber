@@ -53,7 +53,9 @@ public class BPM extends Vehicle {
     private void shoot() {
         if (getWave().equals(getGame().getCurrentWave()) &&
                 !getGame().isPaused() &&
+                !getGame().isFrozen() &&
                 Math.abs(this.getX() - getGame().getJet().getX()) < this.getRadius() * getGame().getDifficultyLevel()) {
+
             Bullet bullet1 = new Bullet(getGame(), this, shootingTimeline);
             bullet1.getBulletTransition().play();
 

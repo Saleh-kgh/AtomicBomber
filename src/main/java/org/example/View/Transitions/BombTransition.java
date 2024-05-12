@@ -184,9 +184,7 @@ public class BombTransition extends Transition {
 
         for (Bunker bunker : destroyedBunkers) {
             if (!bunker.isHit()) {
-                bunker.getFacilityExplosion().play();
-                bunker.setHit(true);
-                bunker.getWave().setRemainingBuildings(bunker.getWave().getRemainingBuildings() - 1);
+                bunker.getEliminated();
             }
         }
     }

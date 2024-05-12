@@ -20,6 +20,7 @@ public class Building extends Facility {
     public void getEliminated() {
         if (!this.isHit()) {
             setHit(true);
+            createReward();
             getWave().setRemainingBuildings(getWave().getRemainingBuildings() - 1);
             getWave().setHitBombs(getWave().getHitBombs() + 1);
             getGame().setHitBombs(getGame().getHitBombs() + 1);
@@ -28,5 +29,9 @@ public class Building extends Facility {
             playExplosionSound();
             this.getFacilityExplosion().play();
         }
+    }
+
+    private void createReward() {
+        new BombAtomicReward(getGame(), this);
     }
 }

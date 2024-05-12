@@ -13,6 +13,7 @@ public class Game {
     private final GameView gameView;
     private final Pane gamePane;
     private boolean isPaused;
+    private boolean isFrozen;
     private final Jet jet;
     private int difficultyLevel;
     private final int numberOfWaves;
@@ -102,6 +103,14 @@ public class Game {
 
     public int getKills() {
         return kills;
+    }
+
+    public boolean isFrozen() {
+        return isFrozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        isFrozen = frozen;
     }
 
     public void setShotBombs(int shotBombs) {

@@ -20,6 +20,7 @@ public class Bunker extends Facility {
     public void getEliminated() {
         if (!this.isHit()) {
             setHit(true);
+            createReward();
             getWave().setRemainingBunkers(getWave().getRemainingBunkers() - 1);
             getWave().setHitBombs(getWave().getHitBombs() + 1);
             getGame().setHitBombs(getGame().getHitBombs() + 1);
@@ -28,5 +29,9 @@ public class Bunker extends Facility {
             playExplosionSound();
             this.getFacilityExplosion().play();
         }
+    }
+
+    private void createReward() {
+        new BombClusterReward(getGame(), this);
     }
 }

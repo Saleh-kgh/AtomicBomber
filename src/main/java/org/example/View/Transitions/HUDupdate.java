@@ -2,6 +2,7 @@ package org.example.View.Transitions;
 
 import javafx.animation.Transition;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.util.Duration;
 import org.example.Model.Game;
 
@@ -11,7 +12,7 @@ public class HUDupdate extends Transition {
     private Label atomicBombCount;
     private Label clusterBombCount;
     private Label jetRemainingLives;
-    private Label FreezeWeaponStatus;
+    private ProgressBar freezeWeaponCharge;
     private Label killsCount;
     private Label currentWaveNumber;
 
@@ -19,7 +20,7 @@ public class HUDupdate extends Transition {
                      Label atomicBombCount,
                      Label clusterBombCount,
                      Label jetRemainingLives,
-                     Label FreezeWeaponStatus,
+                     ProgressBar freezeWeaponCharge,
                      Label killsCount,
                      Label currentWaveNumber) {
 
@@ -27,7 +28,7 @@ public class HUDupdate extends Transition {
         this.atomicBombCount = atomicBombCount;
         this.clusterBombCount = clusterBombCount;
         this.jetRemainingLives = jetRemainingLives;
-        this.FreezeWeaponStatus = FreezeWeaponStatus;
+        this.freezeWeaponCharge = freezeWeaponCharge;
         this.killsCount = killsCount;
         this.currentWaveNumber = currentWaveNumber;
         this.setCycleCount(-1);
@@ -36,11 +37,12 @@ public class HUDupdate extends Transition {
 
     @Override
     protected void interpolate(double v) {
-        atomicBombCount.setText("Atomic Bombs: X " + game.getJet().getRemainingAtomicBombs());
-        clusterBombCount.setText("cluster Bombs: X " + game.getJet().getRemainingClusterBombs());
-        jetRemainingLives.setText("Jet Lives: X " + game.getJet().getRemainingLives());
-        FreezeWeaponStatus.setText("Freeze Weapon: " + game.getJet().getFreezeWeaponStatus());
-        killsCount.setText("Kills: X " + game.getKills());
-        currentWaveNumber.setText("Wave " + game.getCurrentWave().getNumber());
+        atomicBombCount.setText("Atomic Bombs: " + game.getJet().getRemainingAtomicBombs());
+        clusterBombCount.setText("cluster Bombs: " + game.getJet().getRemainingClusterBombs());
+        jetRemainingLives.setText("Jet Lives: " + game.getJet().getRemainingLives());
+        killsCount.setText("Kills: " + game.getKills());
+        currentWaveNumber.setText("Wave: " + game.getCurrentWave().getNumber());
+
+        freezeWeaponCharge.setProgress((double) game.getJet().getFreezeChargeLevel() / 6);
     }
 }
