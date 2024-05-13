@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import org.example.Controller.LeaderBoardController;
 import org.example.Model.Player;
 
 import javax.swing.text.TabableView;
@@ -43,7 +44,8 @@ public class LeaderBoardViewController {
 
     // Method to sort players based on accuracy
     public void sortByAccuracy() {
-        ObservableList<Player> sortedPlayers = FXCollections.observableArrayList(players);
+        LeaderBoardController leaderBoardController = new LeaderBoardController();
+        ObservableList<Player> sortedPlayers = leaderBoardController.getSortedByScore();
         updateTableView(sortedPlayers);
     }
 
