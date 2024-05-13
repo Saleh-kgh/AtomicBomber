@@ -1,5 +1,7 @@
 package org.example.Model;
 
+import javafx.beans.property.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +17,11 @@ public class Player {
     private int hitBombs;
     private int finalWave;
     private int currentDifficulty; // for easy 2 for med 3 for hard
+    private StringProperty tableUsername;
+    private IntegerProperty tableScore;
+    private DoubleProperty tableAccuracy;
+    private DoubleProperty tableDifficultyScore;
+    private IntegerProperty tableFinalWave;
     private static ArrayList<Player> players = new ArrayList<>();
     private static Player loggedInPlayer;
 
@@ -148,6 +155,50 @@ public class Player {
 
     public void setCurrentDifficulty(int currentDifficulty) {
         this.currentDifficulty = currentDifficulty;
+    }
+
+    public StringProperty tableUsernameProperty() {
+        return tableUsername;
+    }
+
+    public void setTableUsername() {
+        this.tableUsername = new SimpleStringProperty(username);;
+    }
+
+    public IntegerProperty tableScoreProperty() {
+        return tableScore;
+    }
+
+    public void setTableScore(int tableScore) {
+        this.tableScore = new SimpleIntegerProperty(totalKills);
+    }
+
+    public DoubleProperty tableAccuracyProperty() {
+        return tableAccuracy;
+    }
+
+    public void setTableAccuracy(double tableAccuracy) {
+        this.tableAccuracy = new SimpleDoubleProperty((double) hitBombs /shotBombs);
+    }
+
+    public DoubleProperty tableDifficultyScoreProperty() {
+        return tableDifficultyScore;
+    }
+
+    public void setTableDifficultyScore(double tableDifficultyScore) {
+        this.tableDifficultyScore = new SimpleDoubleProperty(difficultyBasedKills);
+    }
+
+    public IntegerProperty tableFinalWaveProperty() {
+        return tableFinalWave;
+    }
+
+    public void setTableFinalWave(int tableFinalWave) {
+        this.tableFinalWave = new SimpleIntegerProperty(finalWave);
+    }
+
+    public static void setPlayers(ArrayList<Player> players) {
+        Player.players = players;
     }
 
     public static ArrayList<Player> getPlayers() {

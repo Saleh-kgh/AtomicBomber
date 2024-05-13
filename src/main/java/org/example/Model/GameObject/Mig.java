@@ -3,12 +3,10 @@ package org.example.Model.GameObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.example.Model.Game;
 import org.example.Model.Player;
@@ -37,7 +35,7 @@ public class Mig extends Vehicle {
 
     private void startShooting() {
         shootingTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(3), event -> {
+                new KeyFrame(Duration.seconds(1.5), event -> {
                     shoot();
                 })
         );
@@ -48,7 +46,7 @@ public class Mig extends Vehicle {
 
     private void shoot() {
         if (getWave().equals(getGame().getCurrentWave()) &&
-                !getGame().isPaused() &&
+                !getGame().isStopped() &&
                 !getGame().isFrozen() &&
                 Math.abs(this.getX() - getGame().getJet().getX()) < this.getRadius() * getGame().getDifficultyLevel() &&
                 Math.abs(this.getY() - getGame().getJet().getY()) < this.getRadius() * getGame().getDifficultyLevel()) {

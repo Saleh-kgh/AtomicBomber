@@ -1,27 +1,27 @@
 package org.example.View.Menu;
 
-import javafx.animation.PauseTransition;
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.example.Controller.GameController;
 import org.example.Model.*;
 import org.example.Model.GameObject.Jet;
 import org.example.View.Transitions.HUDupdate;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class GameView extends Application {
 
@@ -35,7 +35,7 @@ public class GameView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        setMediaPlayerMusic("fortunateSon");
+        setMediaPlayerMusic("Sympathy FD");
         musicPlayCommand(true);
 
         gamePane = new Pane();
@@ -58,7 +58,7 @@ public class GameView extends Application {
         scene.setOnKeyPressed(event -> {
 
             GameController gameController = new GameController();
-            if (!game.isPaused()) {
+            if (!game.isStopped()) {
                 switch (event.getCode()) {
                     case UP:
                         gameController.setJetDirectionUp(jet);
@@ -100,7 +100,7 @@ public class GameView extends Application {
                         break;
                 }
             }
-            else {
+            else if(!game.isPaused()) {
                 if (event.getCode() == KeyCode.O)
                     gameController.resumeTransitions(game.getCurrentWave());
             }
@@ -214,22 +214,198 @@ public class GameView extends Application {
         currentWaveNumber.setLayoutY(25);
 
         Button pauseButton = new Button("Pause");
-        pauseButton.setPrefWidth(50);
+        pauseButton.setPrefWidth(100);
         pauseButton.setPrefHeight(50);
-        pauseButton.setStyle("-fx-background-color: rgba(0, 0, 0, 0);\n" +
+        pauseButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
                 "    -fx-background-radius: 10;\n" +
                 "    -fx-background-insets: 0;\n" +
-                "    -fx-text-fill: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
                 "    -fx-font-family: \"Arial\";\n" +
-                "    -fx-font-size: 30px;\n" +
+                "    -fx-font-size: 15px;\n" +
                 "    -fx-font-weight: bold;");
         gamePane.getChildren().add(pauseButton);
         pauseButton.setLayoutX(1400);
-        pauseButton.setLayoutY(25);
+        pauseButton.setLayoutY(20);
+        pauseButton.setFocusTraversable(false);
+        pauseButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (!game.isPaused())
+                    pauseGame();
+            }
+        });
 
         HUDupdate hudUpdate = new HUDupdate(game, atomicBombCount, clusterBombCount,
                 jetRemainingLives, freezeWeaponCharge,
                 killsCount, currentWaveNumber);
         hudUpdate.play();
+    }
+
+    private void pauseGame() {
+        GameController gameController = new GameController();
+        gameController.pauseTransitions(game.getCurrentWave());
+        game.setPaused(true);
+
+        ArrayList<Node> pauseNodes = new ArrayList<>();
+
+        Rectangle boxOutline = new Rectangle(520, 720);
+        pauseNodes.add(boxOutline);
+        boxOutline.setY(90);
+        boxOutline.setX(530);
+        boxOutline.setFill(Color.ORANGE);
+        gamePane.getChildren().add(boxOutline);
+
+        Rectangle box = new Rectangle(500, 700);
+        pauseNodes.add(box);
+        box.setY(100);
+        box.setX(540);
+        box.setFill(Color.BLACK);
+        gamePane.getChildren().add(box);
+
+
+        Button resumeButton = new Button("Resume");
+        pauseNodes.add(resumeButton);
+        resumeButton.setPrefWidth(100);
+        resumeButton.setPrefHeight(50);
+        resumeButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-background-radius: 10;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-font-size: 15px;\n" +
+                "    -fx-font-weight: bold;");
+        gamePane.getChildren().add(resumeButton);
+        resumeButton.setLayoutX(box.getX() + box.getWidth()/2 - 50);
+        resumeButton.setLayoutY(box.getY() + 50);
+        resumeButton.setFocusTraversable(false);
+        resumeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gameController.resumeTransitions(game.getCurrentWave());
+                game.setPaused(false);
+                gamePane.getChildren().removeAll(pauseNodes);
+            }
+        });
+
+
+        Button exitButton = new Button("Exit");
+        pauseNodes.add(exitButton);
+        exitButton.setPrefWidth(100);
+        exitButton.setPrefHeight(50);
+        exitButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-background-radius: 10;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-font-size: 15px;\n" +
+                "    -fx-font-weight: bold;");
+        gamePane.getChildren().add(exitButton);
+        exitButton.setLayoutX(box.getX() + box.getWidth()/2 - 50);
+        exitButton.setLayoutY(box.getY() + 150);
+        exitButton.setFocusTraversable(false);
+        exitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                gameController.cleanWaveMess(game.getCurrentWave());
+                gameController.endGame(game);
+            }
+        });
+
+
+        Button pauseMusicButton = new Button("Pause Music");
+        pauseNodes.add(pauseMusicButton);
+        pauseMusicButton.setPrefWidth(150);
+        pauseMusicButton.setPrefHeight(50);
+        pauseMusicButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-background-radius: 10;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-font-size: 15px;\n" +
+                "    -fx-font-weight: bold;");
+        gamePane.getChildren().add(pauseMusicButton);
+        pauseMusicButton.setLayoutX(box.getX() + box.getWidth()/2 - 75);
+        pauseMusicButton.setLayoutY(box.getY() + 250);
+        pauseMusicButton.setFocusTraversable(false);
+        pauseMusicButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                musicPlayCommand(mediaPlayer.isMute());
+            }
+        });
+
+
+        Button FortunateSonButton = new Button("Play Fortunate Son");
+        pauseNodes.add(FortunateSonButton);
+        FortunateSonButton.setPrefWidth(300);
+        FortunateSonButton.setPrefHeight(50);
+        FortunateSonButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-background-radius: 10;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-font-size: 15px;\n" +
+                "    -fx-font-weight: bold;");
+        gamePane.getChildren().add(FortunateSonButton);
+        FortunateSonButton.setLayoutX(box.getX() + box.getWidth()/2 - 150);
+        FortunateSonButton.setLayoutY(box.getY() + 350);
+        FortunateSonButton.setFocusTraversable(false);
+        FortunateSonButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                musicPlayCommand(false);
+                setMediaPlayerMusic("fortunateSon");
+                musicPlayCommand(true);
+            }
+        });
+
+        Button VirusButton = new Button("Play Virus Music");
+        pauseNodes.add(VirusButton);
+        VirusButton.setPrefWidth(300);
+        VirusButton.setPrefHeight(50);
+        VirusButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-background-radius: 10;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-font-size: 15px;\n" +
+                "    -fx-font-weight: bold;");
+        gamePane.getChildren().add(VirusButton);
+        VirusButton.setLayoutX(box.getX() + box.getWidth()/2 - 150);
+        VirusButton.setLayoutY(box.getY() + 450);
+        VirusButton.setFocusTraversable(false);
+        VirusButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                musicPlayCommand(false);
+                setMediaPlayerMusic("Virus");
+                musicPlayCommand(true);
+            }
+        });
+
+
+        Button SympathyButton = new Button("Play Sympathy FD Music");
+        pauseNodes.add(SympathyButton);
+        SympathyButton.setPrefWidth(300);
+        SympathyButton.setPrefHeight(50);
+        SympathyButton.setStyle("-fx-background-color: linear-gradient(#FFA500, #FF4500);\n" +
+                "    -fx-background-radius: 10;\n" +
+                "    -fx-background-insets: 0;\n" +
+                "    -fx-text-fill: linear-gradient(#d00d0d, #ec4f0b);\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-font-size: 15px;\n" +
+                "    -fx-font-weight: bold;");
+        gamePane.getChildren().add(SympathyButton);
+        SympathyButton.setLayoutX(box.getX() + box.getWidth()/2 - 150);
+        SympathyButton.setLayoutY(box.getY() + 550);
+        SympathyButton.setFocusTraversable(false);
+        SympathyButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                musicPlayCommand(false);
+                setMediaPlayerMusic("Sympathy FD");
+                musicPlayCommand(true);
+            }
+        });
     }
 }

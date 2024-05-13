@@ -12,6 +12,7 @@ public class Game {
     private final Player player;
     private final GameView gameView;
     private final Pane gamePane;
+    private boolean isStopped;
     private boolean isPaused;
     private boolean isFrozen;
     private final Jet jet;
@@ -32,7 +33,7 @@ public class Game {
         shotBombs = 0;
         hitBombs = 0;
         kills = 0;
-        isPaused = true;
+        isStopped = true;
         jet = new Jet(this);
         jet.setJetTransition(new JetTransition(jet, this, gamePane));
     }
@@ -57,12 +58,12 @@ public class Game {
         this.hitBombs = hitBombs;
     }
 
-    public boolean isPaused() {
-        return isPaused;
+    public boolean isStopped() {
+        return isStopped;
     }
 
-    public void setPaused(boolean paused) {
-        isPaused = paused;
+    public void setStopped(boolean stopped) {
+        isStopped = stopped;
     }
 
     public int getDifficultyLevel() {
@@ -71,6 +72,14 @@ public class Game {
 
     public void setDifficultyLevel(int difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
     }
 
     public Wave getCurrentWave() {

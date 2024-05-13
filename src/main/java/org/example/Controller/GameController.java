@@ -8,15 +8,12 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import org.example.Model.*;
 import org.example.Model.GameObject.*;
 import org.example.View.Menu.LoginView;
 import org.example.View.Menu.MainView;
-
-import java.util.ArrayList;
 
 public class GameController {
 
@@ -223,7 +220,7 @@ public class GameController {
         Wave wave = game.getCurrentWave();
         pauseTransitions(game.getCurrentWave());
         game.getJet().getJetTransition().play();
-        game.setPaused(false);
+        game.setStopped(false);
         game.setFrozen(true);
         game.getJet().setFreezeChargeLevel(0);
 
@@ -237,7 +234,7 @@ public class GameController {
     }
 
     public void pauseTransitions(Wave wave) {
-        wave.getGame().setPaused(true);
+        wave.getGame().setStopped(true);
         for (Transition transition : wave.getAnimations()) {
             if (transition.getStatus() == Animation.Status.RUNNING)
                 transition.pause();
@@ -246,7 +243,7 @@ public class GameController {
     }
 
     public void resumeTransitions(Wave wave) {
-        wave.getGame().setPaused(false);
+        wave.getGame().setStopped(false);
         for (Transition transition : wave.getAnimations()) {
             if (transition.getStatus() == Animation.Status.PAUSED)
                 transition.play();
