@@ -107,20 +107,4 @@ public class Jet extends Rectangle {
     public void setRemainingLives(int remainingLives) {
         this.remainingLives = remainingLives;
     }
-
-    public void fireRegularBomb() {
-
-    }
-
-    public void fireAtomicBomb() {
-
-    }
-
-    public void fireClusterBomb() {
-
-    }
-
-    public void explodeJet() {
-
-    }
 }

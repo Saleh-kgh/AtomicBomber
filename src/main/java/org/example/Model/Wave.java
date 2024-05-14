@@ -181,13 +181,4 @@ public class Wave {
     public void addToShotWeaponry(Rectangle weaponry) {
         this.shotWeaponry.add(weaponry);
     }
-
-
-    public void startWave() {
-
-    }
-
-    public void endWave() {
-
-    }
 }

@@ -28,11 +28,6 @@
                 <Label alignment="CENTER" layoutX="64.0" layoutY="33.0" prefHeight="45.0" prefWidth="200.0" text="Welcome to Atomic Bomber!" />
             </children>
         </AnchorPane>
-        <Label layoutX="14.0" layoutY="368.0" prefHeight="18.0" prefWidth="158.0" text="A Patriot Pratorian Product @2024">
-            <font>
-                <Font size="10.0" />
-            </font>
-        </Label>
     </children>
 </AnchorPane>
 

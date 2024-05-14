@@ -2,13 +2,13 @@
   {
     "username": "s",
     "password": "s",
-    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f16falcon.jpg",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f18hornet.jpg",
     "gameSoundVolume": 1,
     "isThemeClassic": false,
-    "totalKills": 242,
-    "difficultyBasedKills": 722,
-    "shotBombs": 280,
-    "hitBombs": 134,
+    "totalKills": 278,
+    "difficultyBasedKills": 830,
+    "shotBombs": 315,
+    "hitBombs": 155,
     "finalWave": 3,
     "currentDifficulty": 3
   }

@@ -63,7 +63,7 @@ public class JetTransition extends Transition {
     @Override
     protected void interpolate(double v) {
         jet.setRotate(degreeAngle);
-        if ((degreeAngle > 90 && degreeAngle < 270) || (degreeAngle < -90 && degreeAngle > -270)) {
+        if ((degreeAngle >= 90 && degreeAngle <= 270) || (degreeAngle <= -90 && degreeAngle >= -270)) {
             jet.setScaleY(-1);
         } else {
             jet.setScaleY(1);

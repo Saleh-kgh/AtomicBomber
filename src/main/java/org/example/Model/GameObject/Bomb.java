@@ -16,7 +16,6 @@ public abstract class Bomb extends Rectangle {
     private final Game game;
     private boolean isHit;
     private BombTransition bombTransition;
-    //private BombExplosionAnim bombExplosionAnim;
 
     public Bomb(Jet jet, Game game, int radius) {
         super(40, 15);
