@@ -27,7 +27,7 @@ public class Mig extends Vehicle {
 
         startShooting();
 
-        this.getVehicleTransition().setVelocityX(50 + (double) (50 * (game.getDifficultyLevel() - 1)) / 3);
+        this.getVehicleTransition().setVelocityX(70 + (double) (70 * (game.getDifficultyLevel() - 1)) / 3);
         setY(200);
         setX(1850);
         this.setScaleX(-1);
@@ -35,7 +35,7 @@ public class Mig extends Vehicle {
 
     private void startShooting() {
         shootingTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(1.5), event -> {
+                new KeyFrame(Duration.seconds(3), event -> {
                     shoot();
                 })
         );

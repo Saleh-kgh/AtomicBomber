@@ -15,6 +15,8 @@ import org.example.Model.GameObject.*;
 import org.example.View.Menu.LoginView;
 import org.example.View.Menu.MainView;
 
+import java.util.Random;
+
 public class GameController {
 
     private BackgroundImage createBackgroundImage () {
@@ -280,6 +282,18 @@ public class GameController {
         game.getJet().setRemainingClusterBombs(game.getJet().getRemainingClusterBombs() + 1);
     }
 
+    public void addTank(Wave wave) {
+        Tank tank = new Tank(wave.getGame(), -1);
+        wave.addToTanks(tank);
+        wave.setRemainingTanks(wave.getRemainingTanks() + 1);
+        wave.addToAnimations(tank.getVehicleTransition());
+        tank.getVehicleTransition().play();
+
+        Random random = new Random();
+        int randomNumber = random.nextInt(100, 800);
+        tank.setX(randomNumber);
+    }
+
     private void relocateJet(Wave wave) {
         Jet jet = wave.getGame().getJet();
         jet.setX(500);
@@ -376,6 +390,29 @@ public class GameController {
         victoryLabel.setLayoutX((900 - victoryLabel.getWidth()) / 2);
         victoryLabel.setLayoutY(380);
 
+        Label waveLabel = new Label("Last wave: " + wave.getGame().getCurrentWave().getNumber());
+        waveLabel.setStyle("-fx-text-fill: linear-gradient(#29ec0b, #52f8be); -fx-font-family: \"Arial\"; -fx-font-size: 40px; -fx-font-weight: bold;");
+        wave.getPane().getChildren().add(waveLabel);
+        waveLabel.toFront();
+        waveLabel.setLayoutX((900 - waveLabel.getWidth()) / 2);
+        waveLabel.setLayoutY(460);
+
+        Label killsLabel = new Label("You killed " + wave.getGame().getKills() + " enemies.");
+        killsLabel.setStyle("-fx-text-fill: linear-gradient(#29ec0b, #52f8be); -fx-font-family: \"Arial\"; -fx-font-size: 40px; -fx-font-weight: bold;");
+        wave.getPane().getChildren().add(killsLabel);
+        killsLabel.toFront();
+        killsLabel.setLayoutX((900 - killsLabel.getWidth()) / 2);
+        killsLabel.setLayoutY(540);
+
+        double accuracy = ((double) wave.getGame().getHitBombs()/wave.getGame().getShotBombs() * 100) < 100 ? ((double) wave.getGame().getHitBombs()/wave.getGame().getShotBombs() * 100) : 100;
+        String formatAccuracy = String.format("%.2f", accuracy);
+        Label accuracyLabel = new Label("Your accuracy: " + formatAccuracy);
+        accuracyLabel.setStyle("-fx-text-fill: linear-gradient(#29ec0b, #52f8be); -fx-font-family: \"Arial\"; -fx-font-size: 40px; -fx-font-weight: bold;");
+        wave.getPane().getChildren().add(accuracyLabel);
+        accuracyLabel.toFront();
+        accuracyLabel.setLayoutX((900 - accuracyLabel.getWidth()) / 2);
+        accuracyLabel.setLayoutY(620);
+
         PauseTransition pause = new PauseTransition(Duration.seconds(10));
         pause.setOnFinished(event -> {
             wave.getPane().getChildren().remove(victoryLabel);
@@ -397,8 +434,31 @@ public class GameController {
         defeatLabel.setStyle("-fx-text-fill: linear-gradient(#ec4f0b, #d00d0d); -fx-font-family: \"Arial\"; -fx-font-size: 60px; -fx-font-weight: bold;");
         wave.getPane().getChildren().add(defeatLabel);
         defeatLabel.toFront();
-        defeatLabel.setLayoutX((950 - defeatLabel.getWidth()) / 2);
+        defeatLabel.setLayoutX((1000 - defeatLabel.getWidth()) / 2);
         defeatLabel.setLayoutY(380);
+
+        Label waveLabel = new Label("Last wave: " + wave.getGame().getCurrentWave().getNumber());
+        waveLabel.setStyle("-fx-text-fill: linear-gradient(#ec4f0b, #d00d0d); -fx-font-family: \"Arial\"; -fx-font-size: 40px; -fx-font-weight: bold;");
+        wave.getPane().getChildren().add(waveLabel);
+        waveLabel.toFront();
+        waveLabel.setLayoutX((1000 - waveLabel.getWidth()) / 2);
+        waveLabel.setLayoutY(460);
+
+        Label killsLabel = new Label("You killed " + wave.getGame().getKills() + " enemies.");
+        killsLabel.setStyle("-fx-text-fill: linear-gradient(#ec4f0b, #d00d0d); -fx-font-family: \"Arial\"; -fx-font-size: 40px; -fx-font-weight: bold;");
+        wave.getPane().getChildren().add(killsLabel);
+        killsLabel.toFront();
+        killsLabel.setLayoutX((1000 - killsLabel.getWidth()) / 2);
+        killsLabel.setLayoutY(540);
+
+        double accuracy = ((double) wave.getGame().getHitBombs()/wave.getGame().getShotBombs() * 100) < 100 ? ((double) wave.getGame().getHitBombs()/wave.getGame().getShotBombs() * 100) : 100;
+        String formatAccuracy = String.format("%.2f", accuracy);
+        Label accuracyLabel = new Label("Your accuracy: " + formatAccuracy);
+        accuracyLabel.setStyle("-fx-text-fill: linear-gradient(#ec4f0b, #d00d0d); -fx-font-family: \"Arial\"; -fx-font-size: 40px; -fx-font-weight: bold;");
+        wave.getPane().getChildren().add(accuracyLabel);
+        accuracyLabel.toFront();
+        accuracyLabel.setLayoutX((1000 - accuracyLabel.getWidth()) / 2);
+        accuracyLabel.setLayoutY(620);
 
         PauseTransition pause = new PauseTransition(Duration.seconds(4));
         pause.setOnFinished(event -> {
@@ -418,6 +478,9 @@ public class GameController {
 
         if (player.getFinalWave() < game.getCurrentWave().getNumber())
             player.setFinalWave(game.getCurrentWave().getNumber());
+
+        DataManager dataManager = new DataManager();
+        dataManager.writePlayerData(Player.getPlayers(), dataManager.getFileAddress());
 
         game.getGameView().musicPlayCommand(false);
         try {

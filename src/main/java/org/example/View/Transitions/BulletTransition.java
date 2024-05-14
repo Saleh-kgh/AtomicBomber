@@ -94,20 +94,22 @@ public class BulletTransition extends Transition {
 
         if (bullet.getX() + deltaX <= gamePane.getScene().getWidth() && bullet.getX() + deltaX + 100 >= 0)
             bullet.setX(bullet.getX() + deltaX);
-        else if (bullet.getX() + deltaX < 0)
-            gamePane.getChildren().remove(bullet);
-        else if (bullet.getX() + deltaX > gamePane.getScene().getWidth() - bullet.getWidth())
-            gamePane.getChildren().remove(bullet);
+        else if (bullet.getX() + deltaX < 0) {
+            destroyBullet();
+        }
+        else if (bullet.getX() + deltaX > gamePane.getScene().getWidth() - bullet.getWidth()) {
+            destroyBullet();
+        }
 
 
         if (bullet.getY() + deltaY + 80 > 0 && bullet.getY() + deltaY < 700)
             bullet.setY(bullet.getY() + deltaY);
         else if (bullet.getY() + deltaY < -80) {
-            gamePane.getChildren().remove(bullet);
+            destroyBullet();
+
         }
-        else if (bullet.getY() > 700) {
-            bullet.explode();
-            gamePane.getChildren().remove(bullet);
+        else if (bullet.getY() + deltaY >= 700) {
+            destroyBullet();
         }
 
         if (bullet.intersects(bullet.getGame().getJet().getBoundsInParent()))
@@ -121,5 +123,13 @@ public class BulletTransition extends Transition {
         bullet.getBulletTransition().stop();
         new BulletExplosion(bullet, gamePane).play();
         bullet.explode();
+    }
+
+    public void destroyBullet() {
+        if (bullet.isHasHit())
+            return;
+        bullet.setHasHit(true);
+        bullet.getBulletTransition().stop();
+        gamePane.getChildren().remove(bullet);
     }
 }

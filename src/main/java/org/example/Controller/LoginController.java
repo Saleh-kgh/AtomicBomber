@@ -3,6 +3,7 @@ package org.example.Controller;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.example.Model.DataManager;
 import org.example.Model.Player;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -17,6 +18,8 @@ public class LoginController {
             return new Result("Username is already taken!", false);
 
         new Player(username, password);
+        DataManager dataManager = new DataManager();
+        dataManager.writePlayerData(Player.getPlayers(), dataManager.getFileAddress());
         return new Result("Registered successfully!", true);
     }
 

@@ -82,6 +82,8 @@ public class Bullet extends Rectangle {
     }
 
     public void explode() {
+
+        this.setHasHit(true);
         playExplosionSound();
 
         Jet jet = getGame().getJet();

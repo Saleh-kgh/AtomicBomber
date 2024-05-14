@@ -20,7 +20,7 @@ public class Player {
     private StringProperty tableUsername;
     private IntegerProperty tableScore;
     private DoubleProperty tableAccuracy;
-    private DoubleProperty tableDifficultyScore;
+    private IntegerProperty tableDifficultyScore;
     private IntegerProperty tableFinalWave;
     private static ArrayList<Player> players = new ArrayList<>();
     private static Player loggedInPlayer;
@@ -169,7 +169,7 @@ public class Player {
         return tableScore;
     }
 
-    public void setTableScore(int tableScore) {
+    public void setTableScore() {
         this.tableScore = new SimpleIntegerProperty(totalKills);
     }
 
@@ -177,23 +177,28 @@ public class Player {
         return tableAccuracy;
     }
 
-    public void setTableAccuracy(double tableAccuracy) {
-        this.tableAccuracy = new SimpleDoubleProperty((double) hitBombs /shotBombs);
+    public double getTableAccuracy() {
+        return tableAccuracy.get();
     }
 
-    public DoubleProperty tableDifficultyScoreProperty() {
+    public void setTableAccuracy() {
+        double accuracy = ((double) hitBombs/shotBombs * 100) < 100 ? ((double) hitBombs/shotBombs * 100) : 100;
+        this.tableAccuracy = new SimpleDoubleProperty(accuracy);
+    }
+
+    public IntegerProperty tableDifficultyScoreProperty() {
         return tableDifficultyScore;
     }
 
-    public void setTableDifficultyScore(double tableDifficultyScore) {
-        this.tableDifficultyScore = new SimpleDoubleProperty(difficultyBasedKills);
+    public void setTableDifficultyScore() {
+        this.tableDifficultyScore = new SimpleIntegerProperty(difficultyBasedKills);
     }
 
     public IntegerProperty tableFinalWaveProperty() {
         return tableFinalWave;
     }
 
-    public void setTableFinalWave(int tableFinalWave) {
+    public void setTableFinalWave() {
         this.tableFinalWave = new SimpleIntegerProperty(finalWave);
     }
 

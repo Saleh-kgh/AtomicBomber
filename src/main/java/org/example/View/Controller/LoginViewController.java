@@ -1,16 +1,22 @@
 package org.example.View.Controller;
 
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import org.example.Controller.LoginController;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.example.Model.DataManager;
+import org.example.Model.Player;
 import org.example.Model.Result;
 import org.example.View.Menu.LoginView;
 import org.example.View.Menu.MainView;
 
-public class LoginViewController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginViewController implements Initializable {
     @FXML
     private TextField usernameField;
     @FXML
@@ -108,5 +114,11 @@ public class LoginViewController {
         alert.setHeaderText(null);
         alert.setContentText(result.getMessage());
         alert.showAndWait();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        DataManager dataManager = new DataManager();
+        Player.setPlayers(dataManager.readPlayerData(dataManager.getFileAddress()));
     }
 }

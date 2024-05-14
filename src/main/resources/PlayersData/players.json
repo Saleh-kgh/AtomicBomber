@@ -1,0 +1,15 @@
+[
+  {
+    "username": "s",
+    "password": "s",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f16falcon.jpg",
+    "gameSoundVolume": 1,
+    "isThemeClassic": false,
+    "totalKills": 242,
+    "difficultyBasedKills": 722,
+    "shotBombs": 280,
+    "hitBombs": 134,
+    "finalWave": 3,
+    "currentDifficulty": 3
+  }
+]

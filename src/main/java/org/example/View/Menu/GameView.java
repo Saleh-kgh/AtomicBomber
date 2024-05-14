@@ -1,5 +1,6 @@
 package org.example.View.Menu;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,10 +33,24 @@ public class GameView extends Application {
     private Wave wave1;
     private Wave wave2;
     private Wave wave3;
+    private boolean isUpKeyPressed = false;
+    private boolean isDownKeyPressed = false;
+    private boolean isRKeyPressed = false;
+    private boolean isGKeyPressed = false;
+    private boolean isCKeyPressed = false;
+    private boolean isControlKeyPressed = false;
+    private boolean isTabKeyPressed = false;
+    private boolean isHKeyPressed = false;
+    private boolean isPKeyPressed = false;
+    private boolean isOKeyPressed = false;
+    private boolean isLKeyPressed = false;
+    private boolean isTKeyPressed = false;
+    private boolean isSpaceKeyPressed = false;
+
 
     @Override
     public void start(Stage stage) throws Exception {
-        setMediaPlayerMusic("Sympathy FD");
+        setMediaPlayerMusic("fortunateSon");
         musicPlayCommand(true);
 
         gamePane = new Pane();
@@ -61,40 +76,43 @@ public class GameView extends Application {
             if (!game.isStopped()) {
                 switch (event.getCode()) {
                     case UP:
-                        gameController.setJetDirectionUp(jet);
+                        isUpKeyPressed = true;
                         break;
                     case DOWN:
-                        gameController.setJetDirectionDown(jet);
+                        isDownKeyPressed = true;
                         break;
                     case SPACE:
-                        gameController.releaseBombRegular(game);
+                        isSpaceKeyPressed = true;
                         break;
                     case R:
-                        gameController.releaseBombAtomic(game);
+                        isRKeyPressed = true;
                         break;
                     case C:
-                        gameController.releaseBombCluster(game);
+                        isCKeyPressed = true;
                         break;
                     case L:
-                        gameController.pauseTransitions(game.getCurrentWave());
+                        isLKeyPressed = true;
                         break;
                     case O:
-                        gameController.resumeTransitions(game.getCurrentWave());
+                        isOKeyPressed = true;
                         break;
                     case P:
-                        gameController.passWave(game);
+                        isPKeyPressed = true;
                         break;
-                    case I:
-                        gameController.changeJetVulnerability(game);
+                    case H:
+                        isHKeyPressed = true;
                         break;
-                    case A:
-                        gameController.addToJetBombAtomics(game);
+                    case G:
+                        isGKeyPressed = true;
                         break;
-                    case Q:
-                        gameController.addToJetBombClusters(game);
+                    case CONTROL:
+                        isControlKeyPressed = true;
                         break;
                     case TAB:
-                        gameController.activeFreezeWeapon(game);
+                        isTabKeyPressed = true;
+                        break;
+                    case T:
+                        isTKeyPressed = true;
                         break;
                     default:
                         break;
@@ -104,7 +122,86 @@ public class GameView extends Application {
                 if (event.getCode() == KeyCode.O)
                     gameController.resumeTransitions(game.getCurrentWave());
             }
+
+            checkInput();
         });
+
+        scene.setOnKeyReleased(event -> {
+            switch (event.getCode()) {
+                case UP:
+                    isUpKeyPressed = false;
+                    break;
+                case DOWN:
+                    isDownKeyPressed = false;
+                    break;
+                case SPACE:
+                    isSpaceKeyPressed = false;
+                    break;
+                case R:
+                    isRKeyPressed = false;
+                    break;
+                case C:
+                    isCKeyPressed = false;
+                    break;
+                case L:
+                    isLKeyPressed = false;
+                    break;
+                case O:
+                    isOKeyPressed = false;
+                    break;
+                case P:
+                    isPKeyPressed = false;
+                    break;
+                case H:
+                    isHKeyPressed = false;
+                    break;
+                case G:
+                    isGKeyPressed = false;
+                    break;
+                case CONTROL:
+                    isControlKeyPressed = false;
+                    break;
+                case TAB:
+                    isTabKeyPressed = false;
+                    break;
+                case T:
+                    isTKeyPressed = false;
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+    private void checkInput() {
+        GameController gameController = new GameController();
+
+        if (isUpKeyPressed)
+            gameController.setJetDirectionUp(jet);
+        if (isDownKeyPressed)
+            gameController.setJetDirectionDown(jet);
+        if (isSpaceKeyPressed)
+            gameController.releaseBombRegular(game);
+        if (isCKeyPressed)
+            gameController.releaseBombCluster(game);
+        if (isRKeyPressed)
+            gameController.releaseBombAtomic(game);
+        if (isTabKeyPressed)
+            gameController.activeFreezeWeapon(game);
+        if (isControlKeyPressed)
+            gameController.addToJetBombClusters(game);
+        if (isGKeyPressed)
+            gameController.addToJetBombAtomics(game);
+        if (isHKeyPressed)
+            gameController.changeJetVulnerability(game);
+        if (isPKeyPressed)
+            gameController.passWave(game);
+        if (isTKeyPressed)
+            gameController.addTank(game.getCurrentWave());
+        if (isOKeyPressed)
+            gameController.resumeTransitions(game.getCurrentWave());
+        if (isLKeyPressed)
+            gameController.pauseTransitions(game.getCurrentWave());
     }
 
     private void setSize(Pane pane) {
@@ -235,9 +332,10 @@ public class GameView extends Application {
             }
         });
 
-        HUDupdate hudUpdate = new HUDupdate(game, atomicBombCount, clusterBombCount,
-                jetRemainingLives, freezeWeaponCharge,
-                killsCount, currentWaveNumber);
+        HUDupdate hudUpdate = new HUDupdate(game, infoBar, infoBarEnd,
+                atomicBombCount, clusterBombCount,
+                jetRemainingLives, freezeWeaponCharge, freezeWeaponStatus,
+                killsCount, currentWaveNumber, pauseButton);
         hudUpdate.play();
     }
 

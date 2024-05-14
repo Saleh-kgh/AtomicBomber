@@ -9,10 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import org.example.Model.Player;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
-import org.example.View.Menu.GameView;
-import org.example.View.Menu.LoginView;
-import org.example.View.Menu.ProfileView;
-import org.example.View.Menu.SettingsView;
+import org.example.View.Menu.*;
 
 import java.io.File;
 import java.net.URL;
@@ -30,6 +27,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void exitAction() {
+        mediaPlayer.stop();
         Platform.exit();
     }
 
@@ -56,7 +54,15 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    private void leaderBoardAction() {}
+    private void leaderBoardAction() {
+        mediaPlayer.stop();
+        LeaderBoardView leaderBoardView = new LeaderBoardView();
+        try {
+            leaderBoardView.start(LoginView.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     private void startGameAction() {
