@@ -2,13 +2,26 @@
   {
     "username": "s",
     "password": "s",
-    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f18hornet.jpg",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f16falcon.jpg",
     "gameSoundVolume": 1,
     "isThemeClassic": false,
-    "totalKills": 278,
-    "difficultyBasedKills": 830,
-    "shotBombs": 315,
-    "hitBombs": 155,
+    "totalKills": 340,
+    "difficultyBasedKills": 1016,
+    "shotBombs": 360,
+    "hitBombs": 188,
+    "finalWave": 3,
+    "currentDifficulty": 3
+  },
+  {
+    "username": "a",
+    "password": "a",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/eurotyphoon.jpg",
+    "gameSoundVolume": 1,
+    "isThemeClassic": false,
+    "totalKills": 81,
+    "difficultyBasedKills": 243,
+    "shotBombs": 52,
+    "hitBombs": 43,
     "finalWave": 3,
     "currentDifficulty": 3
   }

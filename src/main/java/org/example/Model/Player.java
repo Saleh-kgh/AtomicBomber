@@ -1,27 +1,46 @@
 package org.example.Model;
 
+import com.google.gson.annotations.Expose;
 import javafx.beans.property.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player {
+public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Expose
     private String username;
+    @Expose(serialize = false)
     private String password;
+    @Expose
     private String avatarAddress;
+    @Expose
     private int gameSoundVolume;
+    @Expose
     private boolean isThemeClassic;
+    @Expose
     private int totalKills;
+    @Expose
     private int difficultyBasedKills;
+    @Expose
     private int shotBombs;
+    @Expose
     private int hitBombs;
+    @Expose
     private int finalWave;
+    @Expose
     private int currentDifficulty; // for easy 2 for med 3 for hard
-    private StringProperty tableUsername;
-    private IntegerProperty tableScore;
-    private DoubleProperty tableAccuracy;
-    private IntegerProperty tableDifficultyScore;
-    private IntegerProperty tableFinalWave;
+    @Expose(serialize = false)
+    public StringProperty tableUsername;
+    @Expose(serialize = false)
+    public IntegerProperty tableScore;
+    @Expose(serialize = false)
+    public DoubleProperty tableAccuracy;
+    @Expose(serialize = false)
+    public IntegerProperty tableDifficultyScore;
+    @Expose(serialize = false)
+    public IntegerProperty tableFinalWave;
     private static ArrayList<Player> players = new ArrayList<>();
     private static Player loggedInPlayer;
 

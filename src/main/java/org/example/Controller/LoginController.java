@@ -14,6 +14,12 @@ public class LoginController {
 
     public Result registerUser(String username, String password) {
 
+        if (username.equals(""))
+            return new Result("Username is empty!", false);
+
+        if (password.equals(""))
+            return new Result("Password is empty!", false);
+
         if (Player.doesPlayerExist(username))
             return new Result("Username is already taken!", false);
 
@@ -24,6 +30,12 @@ public class LoginController {
     }
 
     public Result loginUser(String username, String password) {
+
+        if (username.equals(""))
+            return new Result("Username is empty!", false);
+
+        if (password.equals(""))
+            return new Result("Password is empty!", false);
 
         if (!Player.doesPlayerExist(username))
             return new Result("Username does not exist!", false);

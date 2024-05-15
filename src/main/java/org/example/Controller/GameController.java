@@ -162,6 +162,10 @@ public class GameController {
         wave.addToAnimations(mig.getVehicleTransition());
         PauseTransition pause = new PauseTransition(Duration.seconds(20));
         pause.setOnFinished(event -> {
+            if (wave.getGame().isPaused()) {
+                pause.play();
+                return;
+            }
             mig.getVehicleTransition().play();
             mig.playAircraftSound();
             giveMigAlarm(wave.getPane());

@@ -114,6 +114,13 @@ public class LoginViewController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(result.getMessage());
         alert.showAndWait();
+
+        MainView mainView = new MainView();
+        try {
+            mainView.start(LoginView.stage);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
