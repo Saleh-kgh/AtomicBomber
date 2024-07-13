@@ -24,5 +24,44 @@
     "hitBombs": 43,
     "finalWave": 3,
     "currentDifficulty": 3
+  },
+  {
+    "username": "kian",
+    "password": "ss",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f15eagle.jpg",
+    "gameSoundVolume": 1,
+    "isThemeClassic": false,
+    "totalKills": 68,
+    "difficultyBasedKills": 204,
+    "shotBombs": 118,
+    "hitBombs": 38,
+    "finalWave": 3,
+    "currentDifficulty": 3
+  },
+  {
+    "username": "sss",
+    "password": "sss",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f16falcon.jpg",
+    "gameSoundVolume": 1,
+    "isThemeClassic": false,
+    "totalKills": 142,
+    "difficultyBasedKills": 406,
+    "shotBombs": 96,
+    "hitBombs": 78,
+    "finalWave": 3,
+    "currentDifficulty": 3
+  },
+  {
+    "username": "aaaaa",
+    "password": "a232egg",
+    "avatarAddress": "D:/AP/AtomicBomber/AlphaVersion/src/main/resources/Pics/Avatars/f18hornet.jpg",
+    "gameSoundVolume": 1,
+    "isThemeClassic": false,
+    "totalKills": 0,
+    "difficultyBasedKills": 0,
+    "shotBombs": 0,
+    "hitBombs": 0,
+    "finalWave": 0,
+    "currentDifficulty": 1
   }
 ]
